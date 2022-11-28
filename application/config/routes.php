@@ -353,6 +353,7 @@ $route['api/get_tags']['GET']='Library/get_tags';
 $route['searchDocumentation']['GET']='Library/searchDocumentation';
 $route['api/change_state_document']['POST']='Library/change_state_documents';
 $route['api/get_document_active']['GET']='Library/get_document_active';
+$route['api/access_user']['GET']='Library/access_user';
 
 //notifications
 $route['api/get_notifications']['GET']='Notifications/get_notifications';
@@ -367,6 +368,21 @@ $route['api/createNotificationTechnical']['POST']='NotificationTechnical/createN
 
 $route['api/getNotificationByTechnical']['GET']='NotificationTechnical/getNotificationByTechnical';
 $route['api/changeState']['POST']='NotificationTechnical/changeState';
+
+$route['api/technicalMaster/getOrderById/(:num)']['GET']='TechnicalMaster/orderById/$1';
+$route['api/stageOrderTechnical']['GET']='TechnicalMaster/stagesOrderTechnicals';
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -80,7 +80,20 @@
                         <label>Correo electrónico</label> 
                         <input type="email" class="form-control"  id="email" name="email" placeholder="Ingrese correo electrónico" >
                         <div class="invalid-feedback"></div>
+                    </div>      
+                    <div class="form-group" id="frm_check"> 
+                            <div class="form-check">
+                            <input class="form-check-input" style="background:white"  type="checkbox"  id="library_active" >
+                            <label class="form-check-label"  for="approve_admin_ev">
+                              Activar acceso a documentación (Biblioteca)
+                            </label>
+                            </div>
                     </div>                 
+
+
+
+
+                    
                     <div class="form-group" id="frm_range">
                         <label>Nivel de usuario</label>
                         <select class="form-select form-control" id="range" name="range" >

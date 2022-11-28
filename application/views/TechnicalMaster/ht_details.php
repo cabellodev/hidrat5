@@ -28,7 +28,7 @@
         <input type="hidden" class="form-control" id="technical_name_ht" name="id" >
         
         <div class="row mb-2 ">
-            <div class="col-md-2 mb-3 ">
+         <!--   <div class="col-md-2 mb-3 ">
                 <div class="form-check">
                           <input class="form-check-input"  type="checkbox" value="" id="approve_admin_ht" disabled>
                           <label class="form-check-label"  for="approve_admin_ht">
@@ -43,11 +43,10 @@
                   Aprobado por técnico master
                   </label>
                 </div>
-            </div>
-            <div class="col-md-8 mb-3" style='text-align: right;'>
+            </div>-->
+            <div class="col-md-12 mb-3" style='text-align: right;'>
               <button type="button"  id="btn_export_ht" style='display: none;' class="btn btn-primary btn-circle "><i class="fas fa-file-export"></i></button>
               <button id="ht_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button> 
-              <button id="send_notification_ht" type="button" class="btn btn-success rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-edit"></i></button>
             </div>              
         </div>
 
@@ -90,10 +89,10 @@
         </div>
 
 
-              <div class="form-group" style="margin-top: 40px; float:right;">
+           <!--   <div class="form-group" style="margin-top: 40px; float:right;">
                 <button class="btn btn-success" value='0' type='button' id="ht_btnEdit"><i id='tr_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
                 <button class="btn btn-success" style='display:none' type='button' id="btn_hidraulic"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
-              </div>
+              </div>-->
 
              <!--  <div class="row mb-2 mr-2 mb-5 justify-content-end">
                       <div class="form-check">
@@ -127,12 +126,12 @@
         
          <div class="card-body collapse in " id= "c2">
              <div class="row mb-2  justify-content-end">
-                <div class="col-md-2 mb-2 ">
+           <!--     <div class="col-md-2 mb-2 ">
                 <button class="btn btn-success offset-6 " type='button' data-toggle="modal"    id="btn_config"><i class="fas fa-cog"></i> Configuración</button>
                </div>
                 <div class="col-md-2 mb-2 ">
                 <button class="btn btn-success offset-6 " type='button' data-toggle="modal"  id="btn_information"><i class="fas fa-plus"></i> Agregar</button>
-               </div>
+               </div>-->
                
              </div>
              <div class="table-responsive">
@@ -153,7 +152,7 @@
           <!-- Table medidas END -->
         </div> <!-- End card body medidas-->
         </div>
-        <div class="card">
+     <!--   <div class="card">
         <div class="card-header" id="card-option-ht">
              <button class="btn btn-link" data-toggle="collapse" data-target="#c3" aria-expanded="true" aria-controls="technicalReportGeneral">
                   <i class="fas fa-table"></i>
@@ -188,7 +187,7 @@
                      </div>
               </div>
          </div>
-      </div>
+      </div> -->
  
 
     <!-- End card body archivos-->
@@ -272,7 +271,7 @@
                         <div class="col-md-4 mb-3">
                           <label for="actividad">Dato</label>
                            <div class="input-group" id='frm_dato'>
-                             <input type="text" class="form-control" maxlength="100" name="dato" id="dato">
+                             <input type="text" class="form-control" maxlength="60" name="dato" id="dato">
                              <div class="invalid-feedback"></div>
                           </div>
                        </div>
@@ -280,7 +279,7 @@
                        <div class="col-md-4 mb-3">
                           <label for="actividad">Velocidad</label>
                            <div class="input-group" id='frm_speed'>
-                             <input type="text" class="form-control" maxlength="100" name="speed" id="speed">
+                             <input type="text" class="form-control" maxlength="10" name="speed" id="speed">
                              <div class="invalid-feedback"></div>
                           </div>
                        </div>
@@ -288,7 +287,7 @@
                        <div class="col-md-4 mb-3">
                           <label for="actividad">Presión</label>
                            <div class="input-group" id='frm_presion'>
-                             <input type="text" class="form-control"maxlength="100" name="presion" id="presion">
+                             <input type="text" class="form-control"maxlength="10" name="presion" id="presion">
                              <div class="invalid-feedback"></div>
                           </div>
                        </div>
@@ -299,7 +298,7 @@
                          <div class="col-md-4 mb-3">
                           <label for="actividad">Caudal</label>
                            <div class="input-group" id='frm_caudal'>
-                             <input type="text" class="form-control"maxlength="100" name="caudal" id="caudal">
+                             <input type="text" class="form-control"maxlength="10" name="caudal" id="caudal">
                              <div class="invalid-feedback"></div>
                           </div>
                          </div>
@@ -308,7 +307,7 @@
                          <div class="col-md-4 mb-3">
                           <label for="actividad">Temperatura</label>
                            <div class="input-group" id='frm_time'>
-                             <input type="text" class="form-control"maxlength="100" name="time" id="time">
+                             <input type="text" class="form-control"maxlength="10" name="time" id="time">
                              <div class="invalid-feedback"></div>
                           </div>
                          </div>
@@ -321,49 +320,20 @@
                </div>
       
                </div>
-             </div>
-              
        <!-- END modal -->     
     </div>
   </div>
 </div>
 
-<div class="modal fade bd-example-modal-lg" id="modal_notification_ht" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="title">Enviar notificación</h5>
-        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-sm">
-            <p id="UserModalInfo"></p>
-          </div>
-        </div>
-        <div class="form-group">
-          <form>
-              <input type="hidden" class="form-control" id="id" name="id" >
-              <div class="form-group" id="frm_name">
-                  <label>Cuerpo de notificación</label>
-                  <textarea type="text" class="form-control" id="notification_manual_ht" name="name" placeholder="Escriba aqui..."></textarea>
-                  <div class="invalid-feedback"></div>
-              </div>
-              <div class="form-group float-right">
-                <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" id="send_technical_ht" class="btn btn-primary">Enviar</button>
-              </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
-<script src="<?php echo base_url(); ?>assets/js_admin/hidraulicTest.js"></script>
-<script src="<?php echo base_url(); ?>assets/js_admin/file.js"></script>
+
+
+
+
+
+
+<script src="<?php echo base_url(); ?>assets/js_admin/technical_master/ht_details.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/seller/file.js"></script>
 
 

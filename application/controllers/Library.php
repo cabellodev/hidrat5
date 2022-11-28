@@ -266,6 +266,23 @@ class Library extends CI_Controller
 
 // function for technical master
 
+public function access_user(){
+
+  
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->model('LibraryModel');
+            if($res=$this->LibraryModel->access_user()) { 
+                $this->response->sendJSONResponse($res);
+            } 
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+}
+
+
+
+
+
 
 public function searchDocumentation()
 { 
@@ -278,6 +295,8 @@ public function searchDocumentation()
         redirect('Home/login', 'refresh');
     }
 }
+
+
 
 public function get_document_active(){
      if ($this->accesscontrol->checkAuth()['correct']) {

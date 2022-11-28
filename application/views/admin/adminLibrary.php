@@ -4,6 +4,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item active">Biblioteca / Administración</li>
     </ol>
+   <section id="template_library" style="display:none">
 
     <div class="accordion" id="accordionExample">
       <div class="card mb-3">
@@ -23,7 +24,7 @@
       </div>
     </div>
 
-
+    
 
     <div class="card mb-3">
       <div class="card-header">
@@ -97,7 +98,9 @@
               </div>
           </div>
         </div>
-    
+</section>
+
+   <div class="alert alert-info" id="alert-active" > No tienes los privilegios necesarios para manipular esta sección. Comunicate con el super administrador.</div>
     
   </div>
 </div>

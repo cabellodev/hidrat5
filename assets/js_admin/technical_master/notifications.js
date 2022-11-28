@@ -77,6 +77,47 @@ get_news_notifications =()=>{
     });
 }
 
+const table_order_search = $("#table_order_search").DataTable({
+	// searching: true,
+	language: {
+		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+	},
+    "order": [[ 0, "desc" ]],
+    columnDefs: [
+        { "width": "10%", "targets": 0 }, /*Id */
+        { "width": "25%", "targets": 1 }, /*Id */
+        { "width": "15%", "targets": 2 }, /*Id */
+        { "width": "25%", "targets": 3 }, /*Id */
+        { "width": "25%", "targets": 4 }, /*Id */
+      
+    ],
+
+	columns: [
+	
+        { data: "id" },
+        { data: "client" },
+        { data: "component" },
+        { data: "description" },
+     
+        {   defaultContent: "oc",
+        "render": function (data, type, row){
+                return `<button type='button' class='btn btn-primary' name="details_order">
+                  <i class="fas fa-eye">Detalles</i>
+                </button>`
+        }},
+        
+	],
+});
+
+
+$("#table_order_search").on("click", "button", function () {
+    let data = table_order_search.row($(this).parents("tr")).data();
+    if ($(this)[0].name == "details_order") {
+        let ot = data.id;
+		let url = 'api/stageOrderTechnical'+'?ot='+ot;
+		window.location.assign(host_url+url);
+	}});
+
 const tabla_notification = $("#table-notifications").DataTable({
 	// searching: true,
 	language: {
@@ -250,13 +291,69 @@ alert_green=(notifications)=>{
 
 
 
+search_by_orders =()=>{
+   search= $("#search_number").val();
+   
+    if(search !=""){
+        
+    if(!isNaN(search)){
 
+    $.ajax({
+        type: "GET",
+        url: host_url + `api/technicalMaster/getOrderById/${search}`,
+        crossOrigin: false,
+        async: false,
+        dataType: "json",
+        success: (result) => {
+           console.log(result);
+            datatable_order_number(result);
+
+        
+        },
+        error: (result) => {
+            datatable_order_number(0);
+        },
+
+
+    });
+}else{
+    swal({
+        title: "Valor númerico",
+        icon: "warning",
+        text: "El ingreso solo debe ser numérico.Intente nuevamente.",
+    });
+
+}
+
+}else{ 
+    swal({
+        title: "Campo incompleto",
+        icon: "warning",
+        text: "Ingrese un número de orden para iniciar la búsqueda.",
+    });
+}
+
+
+}
+
+datatable_order_number=(data)=>{
+	table_order_search .clear();
+	table_order_search .rows.add(data);
+	table_order_search .draw();
+}
 
 $("#list_notifications").on('click',()=>{
     $("#modal_notifications").modal('show');
 })
 
+$("#order_search").on('click',()=>{
+    $("#modal_search_orders").modal('show');
+})
+$("#btn-search-ot").on('click',search_by_orders);
 $("#btn-check-all").on('click',check_all);
+
+
+
 
 
     

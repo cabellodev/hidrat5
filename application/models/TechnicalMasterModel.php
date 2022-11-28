@@ -7,6 +7,24 @@ class TechnicalMasterModel extends CI_Model
         parent::__construct();
     }
 
+    public function orderById($id){
+
+            $this->db->select('ot.id ,ot.description, component.name as component , enterprise.name as client');
+            $this->db->from('ot');
+            $this->db->join('component', 'component.id = ot.component_id');
+            $this->db->join('enterprise', 'enterprise.id = ot.enterprise_id');
+            $this->db->where('ot.id', $id);
+
+            $query= $this->db->get();
+            if(sizeof($query->result())==0){
+                return false; 
+
+            }else{
+                return  $query->result_array();
+            }
+
+    }
+
     public function  getHydraulicTestEnable () { 
         
         $user= $_SESSION['id'];

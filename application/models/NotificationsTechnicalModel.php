@@ -19,14 +19,14 @@ class NotificationsTechnicalModel extends CI_Model
 
         if(sizeof($result->result()) == 0){
               $aux = array('user'=>$data['user'],
-                           'messages'=>$data['messages'],
-                           'report_free'=>$data['report_free']);
+                           'messages'=>$data['messages']
+                           );
 
              return $this->db->insert('notifications_technical',$aux);
 
         }else{
             $this->db->where('user',$data['user']);
-            return $this->db->update('notifications_technical',array('messages'=>$data['messages'],'report_free'=>$data['report_free']));
+            return $this->db->update('notifications_technical',array('messages'=>$data['messages']));
             
         }
 

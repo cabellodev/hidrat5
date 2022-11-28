@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item active">Búsqueda de documentación</li>
     </ol>
-
+    <section id="template_library" style="display:none">
     <div class="accordion" id="accordionExample">
       <div class="card mb-3">
         <div class="card-header" id="headingOne">
@@ -86,8 +86,8 @@
               </div>
           </div>
         </div>
-    
-    
+        <div class="alert alert-info" id="alert-active" > No tienes los privilegios necesarios para manipular esta sección. Comunicate con el super administrador.</div>
+     </section>
   </div>
 </div>
 
