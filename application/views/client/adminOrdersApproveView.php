@@ -39,6 +39,7 @@
                 <th>Fecha de ingreso</th>
                 <th>Componente</th>
                 <th>Tipo de servicio</th>
+                <th>Informe Técnico</th>
                 <th>Estado</th>
             </tr>
             </thead>

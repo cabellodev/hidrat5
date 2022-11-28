@@ -40,6 +40,7 @@
                 <th>Componente</th>
                 <th>Tipo de servicio</th>
                 <th>Estado</th>
+                <th>Informe Técnico</th>
                 <th>Aprobar</th>
             </tr>
             </thead>

@@ -17,10 +17,12 @@ class OrdersModel extends CI_Model
         $q = $this->db->query($sql)->row_array();
         $id_enterprise = $q['enterprise_id'];
 
-        $query = "SELECT ot.id id, ot.date_admission date, ot.type_service service, c.name component, s.name state
+        $query = "SELECT ot.id id, ot.date_admission date, ot.type_service service, c.name component, s.name state, tr.details tr_details, ht.details ht_details
                   FROM ot
                   JOIN enterprise e ON ot.enterprise_id = e.id
                   JOIN component c ON ot.component_id = c.id
+                  LEFT JOIN technical_report tr ON ot.id = tr.ot_id
+                  LEFT JOIN  hydraulic_test ht ON ot.id = ht.ot_id
                   JOIN ot_state os ON ot.id = os.ot_id
                   JOIN state s ON os.state_id = s.id
                   WHERE ot.enterprise_id = $id_enterprise AND os.id = (
@@ -45,10 +47,11 @@ class OrdersModel extends CI_Model
         $q = $this->db->query($sql)->row_array();
         $id_enterprise = $q['enterprise_id'];
 
-        $query = "SELECT ot.id id, ot.date_admission date, ot.type_service service, c.name component, s.name state, q.email_send
+        $query = "SELECT ot.id id, ot.date_admission date, ot.type_service service, c.name component, s.name state, q.email_send, tr.details tr_details
                   FROM ot
                   JOIN enterprise e ON ot.enterprise_id = e.id
                   JOIN component c ON ot.component_id = c.id
+                  LEFT JOIN technical_report tr ON ot.id = tr.ot_id
                   JOIN ot_state os ON ot.id = os.ot_id
                   JOIN quotation q ON ot.id = q.ot_id
                   JOIN state s ON os.state_id = s.id

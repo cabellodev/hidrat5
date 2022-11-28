@@ -45,11 +45,27 @@ const tabla = $("#table_orders").DataTable({
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
+	"columnDefs": [
+        {
+            className: "text-center", "targets": [4 , 5] ,
+        },
+    ],
 	columns: [
 		{ data: "id" },
 		{ data: "date" },
 		{ data: "component" },
 		{ data: "service" },
+		{ defaultContent: "oc",
+		"render": function (data, type, row){
+			if(row.tr_details === 1){
+				return `<button type='button' onclick="location.href= '${host_url}assets/upload/technicalReport/technical_report_${row.id}.pdf'" name='btnApprove' class='btn btn-primary'>
+				<i class="fas fa-file-signature"></i>
+				</button>`
+			}else{
+				return `<span> N/A </span>`
+			}
+			}
+		 },
 		{ data: "state" },
 	],
 });

@@ -50,7 +50,7 @@ const tabla = $("#table_orders").DataTable({
 	},
 	"columnDefs": [
         {
-            className: "text-center", "targets": [5] ,
+            className: "text-center", "targets": [5 , 6] ,
         },
     ],
 	columns: [
@@ -59,6 +59,17 @@ const tabla = $("#table_orders").DataTable({
 		{ data: "component" },
 		{ data: "service" },
 		{ data: "state" },
+		{ defaultContent: "oc",
+		"render": function (data, type, row){
+			if(row.tr_details === 1){
+				return `<button type='button' onclick="location.href= '${host_url}assets/upload/technicalReport/technical_report_${row.id}.pdf'" class='btn btn-primary'>
+				<i class="fas fa-file-signature"></i>
+				</button>`
+			}else{
+				return `<span> N/A </span>`
+			}
+			}
+		 },
 		{ defaultContent: "oc",
 		   "render": function (data, type, row){
 			if(row.email_send === null){

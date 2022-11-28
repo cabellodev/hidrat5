@@ -7,14 +7,18 @@ $(document).on({
     },
 });
 
+
 $(() => {
     get_orders_test();
-	//get_orders();
 });
 
 
+
 $("#newOrder").on('click', () => {
-	window.open(host_url+'newOrder', '_self');
+	/* $('#input_search_0').val('4'); */
+	let a = $('#input_search_0').val();
+	console.log('Con el boton el valor es:'+a);
+	/* window.open(host_url+'newOrder', '_self'); */
 })
 currentName="2428628432869191297121313173";
 /*Funcion para recuperar las ordenes de trabajo*/
@@ -55,7 +59,8 @@ get_orders = () => {
 	xhr.send();
 };
 
-get_orders_test = () => {
+get_orders_test =  () => {
+
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getOrdersTest`);
 	xhr.responseType = "json";
@@ -129,11 +134,15 @@ get_orders_test = () => {
 			$('#table_orders thead tr').clone(true).appendTo( '#table_orders thead' );
 
 			$('#table_orders thead tr:eq(1) th').each( function (i) {
+				let a = localStorage.getItem('input_search_'+i);
+				if(a == null){a=''}
+
 				var title = $(this).text(); //es el nombre de la columna
-				$(this).html( '<input type="text" style="border-radius: .2rem; border: 1px solid #d1d3e2;"/>' );
+				$(this).html( '<div class="row"><div class="col-md-12 mb-3"><input style="width:100%" value="'+a+'" id="input_search_'+i+'" type="text" size ="10"/></div></div>' );
 		 
 				$( 'input', this ).on( 'keyup change', function () {
 					if (tabla.column(i).search() !== this.value ) {
+						localStorage.setItem('input_search_'+i, this.value);
 						tabla
 							.column(i)
 						        		.search( this.value , true, false, true )
@@ -142,6 +151,7 @@ get_orders_test = () => {
 					}
 				} );
 			} );   
+
 
 		} else {
 			swal({
@@ -152,16 +162,20 @@ get_orders_test = () => {
 		}
 	});
 	xhr.send();
+	console.log('a');
 };
 
 /*Constante para rellenar las filas de la tabla: lista de ordenes de trabajo*/
 const tabla = $('#table_orders').DataTable({
+	stateSave: true,
 	fixedHeader: true,
 	orderCellsTop: false,
-       language:{
+	aoColumnDefs: [
+        { 'bSortable': false, 'aTargets': [ ]   }
+     ],
+	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
-
 	columnDefs: [
         { "width": "10%", "targets": 0 }, /*Id */
         { "width": "15%", "targets": 1 }, /*Fecha Ingreso*/
@@ -229,6 +243,7 @@ const tabla = $('#table_orders').DataTable({
 $("#table_orders").on("click", "button", function () {
     let data = tabla.row($(this).parents("tr")).data();
     if ($(this)[0].name == "btn_adm") {
+		$('#input_search_0').val('4');
 		let ot = data.number_ot;
 		let url = 'stagesOrder'+'?ot='+ot;
 		window.location.assign(host_url+url);
