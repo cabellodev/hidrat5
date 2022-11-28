@@ -62,12 +62,53 @@ class OrdersClient extends CI_Controller
     public function getOrders()
     { 
 		$orders = $this->OrdersModel->getOrders();
+        $cont = 0;
+        foreach($orders as $value){
+            if($value['tr_details']) {
+                $a = json_decode($value['tr_details'], true);
+                if($a["check_adm"] == "true"){
+                    $value['tr_details'] = 1;
+                }else{
+                    $value['tr_details'] = 0;
+                } 
+            }else{
+                $value['tr_details'] = 0;
+            }
+        
+            if($value['ht_details']) {
+                $b = json_decode($value['ht_details'], true);
+                if($b["approve_admin"] == "true"){
+                    $value['ht_details'] = 1;
+                }else{
+                    $value['ht_details'] = 0;
+                }
+            }else{
+                $value['ht_details'] = 0;
+            }      
+            $orders[$cont] = $value;
+            $cont++;
+        }
         $this->response->sendJSONResponse($orders);
     }
 
     public function getOrdersApprove()
     {
 		$orders = $this->OrdersModel->getOrdersApprove();
+        $cont = 0;
+        foreach($orders as $value){
+            if($value['tr_details']) {
+                $a = json_decode($value['tr_details'], true);
+                if($a["check_adm"] == "true"){
+                    $value['tr_details'] = 1;
+                }else{
+                    $value['tr_details'] = 0;
+                } 
+            }else{
+                $value['tr_details'] = 0;
+            }
+            $orders[$cont] = $value;
+            $cont++;
+        }
         $this->response->sendJSONResponse($orders);
     }
 

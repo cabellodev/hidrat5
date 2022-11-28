@@ -36,10 +36,12 @@
             <thead>
             <tr>
                 <th>OT</th>
-                <th>Fecha de ingreso</th>
+                <th>Fecha de ingresos</th>
                 <th>Componente</th>
                 <th>Tipo de servicio</th>
                 <th>Estado</th>
+                <th>Informe Técnico</th>
+                <th>Prueba hidráulica</th>
             </tr>
             </thead>
           </table>

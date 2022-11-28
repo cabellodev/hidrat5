@@ -21,15 +21,16 @@
                         </div>
                     </div>
                     <div class="col-md-4 mb-3" id='frm_enterprise'>
+                    <!-- <input type="text" class="form-control"  id="enterprise" placeholder="" aria-describedby="inputGroupPrepend3"> -->
                         <label>Empresa</label>
-                        <select class="custom-select d-block w-100" name="enterprise" id="enterprise" >
+                        <select name="enterprise" id="enterprise" >
                             <option></option>
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-md-4 mb-3" id='frm_service'>
                         <label>Tipo servicio</label>
-                        <select class="custom-select d-block w-100" name="service" id="service" required="">
+                        <select name="service" id="service" required="">
                             <option></option>
                             <option value="Reparación">Reparación</option>
                             <option value="Fabricación">Fabricación</option>
@@ -41,14 +42,14 @@
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3" id="frm_component">
                         <label>Componente</label>
-                        <select class="custom-select d-block w-100" id="component" name="component" >
+                        <select id="component" name="component" >
                             <option></option>
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-md-4 mb-3" id="frm_priority">
                         <label for="actividad">Tipo de prioridad</label>
-                        <select class="custom-select d-block w-100" id="priority" name="priority" required="">
+                        <select id="priority" name="priority" required="">
                             <option></option>
                             <option value="Baja">BAJA</option>
                             <option value="Media">MEDIA</option>
@@ -159,7 +160,7 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/vendor/fuzzy/fuzzy-autocomplete.js"></script>
+
 <script src="<?php echo base_url(); ?>assets/js_admin/createOrder.js"></script>
 <script>
   $( function() {

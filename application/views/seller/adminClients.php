@@ -16,9 +16,9 @@
                   <div class="col-md-6 mb-3" id="frm_priority">
                         <label for="actividad">Buscar cliente (filtro avanzado)</label>
                         <input type="text" class="form-control" name="ot_number" id="enterprise" placeholder="" aria-describedby="inputGroupPrepend3">
-                  <!--      <select class="custom-select d-block w-100" id="enterprise" name="priority" required="">
+                       <!-- <select class="custom-select d-block w-100" id="enterprise" name="priority" required="">
                            <option value="0"></option>
-                        </select>-->
+                        </select> -->
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-md-2 mb-2 mt-4" id="search"> 
@@ -29,12 +29,16 @@
               <br>
 
               <div class="row">
-              <div class="col-md-6 mb-3" id="frm_priority">
+                    <div class="col-md-6 mb-3" id="frm_priority">
                      
                         <input type="text" class="form-control" name="client_name" id="client_name" placeholder="Cliente" aria-describedby="inputGroupPrepend3"disabled>
                   <!--      <select class="custom-select d-block w-100" id="enterprise" name="priority" required="">
                            <option value="0"></option>
                         </select>-->
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-md-2 mb-2"> 
+                        <button type="button" onclick=getOrderFail(); class="btn btn-primary"><i class="fas fa-broom"></i></button>
                         <div class="invalid-feedback"></div>
                     </div>
 
@@ -48,6 +52,7 @@
         <i class="fas fa-table"></i>
         Lista de órdenes
       </div>
+      
       <div class="card-body">
               <div class="row justify-content" >
                  <div class="col-md-12 mb-3" >

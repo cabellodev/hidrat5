@@ -1,8 +1,25 @@
 $(() => {
+
     getFields();
 	getClientModal();
-	getAllOrder();
-	
+
+	let id = localStorage.getItem('enterprise_id');
+	if(id)
+	{
+		getAllOrder();
+		let name = localStorage.getItem('nameClient');
+		getOrdersClientStorage(id, name);
+	}else{
+		getAllOrder();
+	}
+
+	for(let i=0; i<6; i++){
+		let filter = localStorage.getItem('input_search_'+i);
+		if(filter){
+			$('#input_search_'+i).val(filter);
+		}
+	}
+
 });
 
 
@@ -121,24 +138,29 @@ getOrdersClient=()=>{
 	let enterprise;
 	let enterprise_id;
 	
-
 	if(list_search){
 
 		data = { id_enterprise : id_list }
 		$('#client_name').val(nameClient);
+		localStorage.setItem('enterprise_id', id_list);
+		localStorage.setItem('nameClient', nameClient);
 	}else{
 
 	enterprise = $('#enterprise').val();
-    clients.forEach(function(item) {
-        if(enterprise == item.name){
+	clients.forEach(function(item) {
+		if(enterprise == item.name){
 			nameClient =item.name;
-            enterprise_id= item.id;
-        }
-    });
+			enterprise_id= item.id;
+		}
+	});
 
-    $('#client_name').val(nameClient);
-	data = { id_enterprise : enterprise_id  }
-    }
+	$('#client_name').val(nameClient);
+		data = { id_enterprise : enterprise_id  }
+		localStorage.setItem('enterprise_id', enterprise_id);
+		localStorage.setItem('nameClient', nameClient);
+	}
+	
+
 
     $.ajax({
         type: "POST",
@@ -163,8 +185,37 @@ getOrdersClient=()=>{
         })
 };
 
+getOrdersClientStorage = (id, name) =>{
+	$('#client_name').val(name);
+	data = { id_enterprise : id }
+	
+	$.ajax({
+        type: "POST",
+        url: host_url + "api/ordersEnterprise",
+        data: {data},
+        dataType: "json",
+        success: (result) => {
+               
+            let data = result.map((u) => {
+				if (u.approve_client == 1) {
+					u.approve_client = "Aprobado";
+				} else {
+					u.approve_client = "Pendiente de aprobación";
+				}
+				return u;
+			});
+			datatable(data);
+        },
+        error: ()=>{
+			getOrderFail();
+        }
+        })
+}
+
 getOrderFail=()=>{
 	$('#client_name').val("Todas las órdenes");
+	localStorage.removeItem('enterprise_id');
+	localStorage.removeItem('nameClient');
 	
 	$.ajax({
         type: "GET",
@@ -213,21 +264,27 @@ getAllOrder=()=>{
 			
    if(search){
          search =false; 
-       
-		$('#table-clients thead tr').clone(search).appendTo( '#table-clients thead' );
+	
+		    $('#table-clients thead tr').clone(search).appendTo( '#table-clients thead' );
 			$('#table-clients thead tr:eq(1) th').each( function (i) {
 				var title = $(this).text(); //es el nombre de la columna
-				$(this).html( '<input type="text" size ="10"style="border-radius: .1rem; border: 1px solid #d1d3e2; "/>' );
-		 
+
+				$(this).html( '<div class="row"><div class="col-md-12 mb-3"><input style="width:100%" id="input_search_'+i+'" type="text" size ="10"/></div></div>' );
+				
+			
+
+				
+				
 				$( 'input', this ).on( 'keyup change', function () {
 					if (tabla.column(i).search() !== this.value ) {
+						localStorage.setItem('input_search_'+i, this.value);
 						tabla
 							.column(i)
 							.search( this.value , true, false, true )
 							.draw();
 					}
 				} );
-			} );
+			} ); 
 
 			datatable(data);
 		
@@ -246,6 +303,7 @@ getAllOrder=()=>{
 };
 
 
+
 datatable=(data)=>{
 	
 	tabla.clear();
@@ -259,15 +317,9 @@ $("#btn_list").on("click", ()=>{
 
 
 const tabla = $('#table-clients').DataTable( {
-	aoColumnDefs: [
-		{ 'bSortable': false, 'aTargets': [ 0,1,2,3,4,5,6,7,8]   }
-	 ],
+	stateSave: true,
 	fixedHeader: true,
 	orderCellsTop: false,
-	//bLengthChange: false,
-	
-
-	// searching: true,
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
@@ -281,7 +333,8 @@ const tabla = $('#table-clients').DataTable( {
 		{ "width": "5%", "targets": 6 }, 
 		{ "width": "15%", "targets": 7 }, 
 		{ "width": "15%", "targets": 8 }, 
-		{className: "text-center", "targets": [7,8 ]},
+		{className: "text-center", "targets": [3]},
+		{className: "text-center", "targets": [7,8,9]},
 	], 
 	columns: [
 		{ data: "number_ot"},

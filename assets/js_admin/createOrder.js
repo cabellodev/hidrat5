@@ -12,6 +12,14 @@ $(() => {
     autoincrementID();
 });
 
+$("#service").selectize({
+    sortField: "text",
+});
+
+$("#priority").selectize({
+    sortField: "text",
+});
+
 
 autoincrementID = ()=>  { 
     $.ajax({
@@ -25,7 +33,6 @@ autoincrementID = ()=>  {
         }
     })
 }
-
 
 
 $("#ot_number").change(() => { 
@@ -135,6 +142,10 @@ getFields = () => {
                     $(option).appendTo("#component");
                     components.push(u.name);
                 });
+
+                $("#component").selectize({
+                    sortField: "text",
+                });
             }
             if(enterprises.length == 0){
                 xhr.response[1].map((u) => {
@@ -145,6 +156,11 @@ getFields = () => {
                     $(option).appendTo("#enterprise");
                     enterprises.push(u.name);
                 });
+          
+                $("#enterprise").selectize({
+                    sortField: "text",
+                });
+                
             }
             if(technicals.length == 0){
                 xhr.response[2].map((u) => {
