@@ -32,6 +32,7 @@ class User_model extends CI_Model {
                 'password' => $hash,
                 'full_name' => $data['full_name'],
                 'email' => $data['email'],
+                'library_active'=>$data['library_active'],
                 'state' => 1,
             );
             if($this->db->insert('user', $datos_user)){
@@ -71,6 +72,7 @@ class User_model extends CI_Model {
                 'full_name' => $data['full_name'],
                 'email' => $data['email'],
                 'state' => 1,
+                'library_active'=>$data['library_active'],
             );
             $this->db->where('rut', $data['rut_old']);
             if($this->db->update('user', $datos_user)){

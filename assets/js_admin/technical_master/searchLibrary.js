@@ -3,12 +3,45 @@ $(()=>{
     
     get_tags_search();
     get_books();
+    access_validation();
 
 })
 
-
 let books = [];
 let tags_search= [];
+
+
+access_validation=()=>{
+        
+    $.ajax({
+		type: "GET",
+		url: host_url + "api/access_user", //crear tag 
+		crossOrigin: false,
+        async: false,
+		dataType: "json",
+		success: (result) => {
+           if(result[0].library_active ==0){
+            $('#template_library').css('display:none');
+            $('#alert-active').show();
+                swal({
+                    title: "Acceso denegado a la Biblioteca ",
+                    icon: "warning",
+                    text: "Usted no posee los permisos para realizar acciones sobre las documentaciones de esta sección.Comuniquese con el Super administrador.",
+                    button: "OK",
+                })
+           }else{
+
+            $('#template_library').show();
+            $('#alert-active').hide();
+            }
+           }
+            
+        },
+    
+    );
+
+}
+
 
 get_tags_search=()=>{
         

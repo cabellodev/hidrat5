@@ -64,10 +64,7 @@ class LibraryModel extends CI_Model
 
    public function delete_tags($datos)
    {
-
-       
       $query = "DELETE FROM tags WHERE name = ?";
-     
       return $this->db->query($query, array($datos['tag_delete']));
    }
 
@@ -106,6 +103,15 @@ class LibraryModel extends CI_Model
       return $this->db->query($query , array(0))->result_array();
    }
 
+
+
+
+   public function access_user()
+   {
+      $user= $_SESSION['id'];
+      $query = "SELECT u.library_active from user u WHERE u.id=?";
+      return $this->db->query($query , array($user))->result_array();
+   }
 
 
 

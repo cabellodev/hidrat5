@@ -425,7 +425,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 
     if(list_technical_notification.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
 	      
-		  report_free = [{ev_free:false},{tr_free:true},{rep_free:true},{ht_free:true}]
+		
 
 		  aux = [];
 		  object = { message:message_hab,
@@ -434,8 +434,8 @@ notification_technical = (user,report)=>{ // crear notificaciones
 					 state:true}
 
 		  aux.push(object);
-          data={user:user,messages:JSON.stringify(aux), report_free:JSON.stringify(report_free)}; 
-		  console.log(data);
+          data={user:user,messages:JSON.stringify(aux)}; 
+		
 
 		  $.ajax({
 			data: {
@@ -457,14 +457,9 @@ notification_technical = (user,report)=>{ // crear notificaciones
 		list_technical_notification.forEach((x) => {
 			
 				if(x.user == user){ 
+
+
 					user_exist=true;
-					send= JSON.parse(x.report_free);
-					console.log(send[0].ev_free);
-					if(send[0].ev_free){ // si ya se le fue enviado notificacion , no se le envia mas .
-					  
-				   
-				    report_free = [{ev_free:false},{tr_free:send[1].tr_free},{rep_free:send[2].rep_free},{ht_free:send[3].ht_free}]
-					
 					
 					aux = JSON.parse(x.messages);
 
@@ -474,7 +469,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 						state:true}
 
 					aux.push(object);
-					data ={user:user,messages:JSON.stringify(aux), report_free:JSON.stringify(report_free)};
+					data ={user:user,messages:JSON.stringify(aux)};
 					
 				       $.ajax({
 							data: {
@@ -489,16 +484,15 @@ notification_technical = (user,report)=>{ // crear notificaciones
 							}	
 						});
 				  }
-			}
+			
            });
 
 		if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
-            console.log("entre a este igual ")
-			report_free = [{ev_free:false},{tr_free:true},{rep_free:true},{ht_free:true}] //nuevo
+           
 			aux = [];
 			object= { message:message_hab,date:moment().format(),ot:ot,state:true}
 			aux.push(object);
-			data={user:user,messages:JSON.stringify(aux),report_free:JSON.stringify(report_free)}; 
+			data={user:user,messages:JSON.stringify(aux)}; 
 			
 			$.ajax({
 			  data: {
@@ -525,15 +519,13 @@ notification_technical = (user,report)=>{ // crear notificaciones
 								
 									if(x.user == technicals_user){ 
 
-										send= JSON.parse(x.report_free);
-					
-					                    report_free = [{ev_free:true},{tr_free:send[1].tr_free},{rep_free:send[2].rep_free},{ht_free:send[3].ht_free}]
+										
 										user_exist=true;
 										aux = JSON.parse(x.messages);
 										object= { message:message_des,date:moment().format(),ot:ot,state:true}
 										aux.push(object);
-										console.log(aux);
-										data ={user:technicals_user,messages:JSON.stringify(aux),report_free:JSON.stringify(report_free)};
+										
+										data ={user:technicals_user,messages:JSON.stringify(aux)};
 										$.ajax({
 												data: {
 													data,
@@ -550,11 +542,11 @@ notification_technical = (user,report)=>{ // crear notificaciones
 					});
 				
 					if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
-						report_free = [{ev_free:false},{tr_free:true},{rep_free:true},{ht_free:true}] //nuevo
+						
 						aux = [];
 						object = { message:message_des,date:moment().format(),ot:ot,state:true}
 						aux.push(object);
-						data={user:technicals_user,messages:JSON.stringify(aux),report_free:JSON.stringify(report_free)}; 
+						data={user:technicals_user,messages:JSON.stringify(aux)}; 
 						
 						$.ajax({
 						  data: { data, },
@@ -579,6 +571,8 @@ notification_manual = () => {
    let message = $("#notification_manual").val();
    let user = $("#technical_ev").val();
    let ot= $("#id_ot").val();
+
+   if(user!=""){
 
 	if(list_technical_notification.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
 	   
@@ -643,6 +637,15 @@ notification_manual = () => {
 			  }
 		 });
 	}
+}else{
+	swal({
+		title: "Atención",
+		icon: "warning",
+		text: "Debe asignar un técnico para enviar notificaciones",
+		button: "OK",
+	});
+
+}
 }
 
 $("#send_notification").on("click",()=>{

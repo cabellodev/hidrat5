@@ -166,6 +166,7 @@ $("#list_user").on("click", "button", function () {
 /*Funcion para crear y editar un usuario */
 create_edit_user = () =>{
     //Discriminar si se debe crear o editar
+    let active=0;
     let url = "";
     let data = "";
     let rut = $("#rut").val();
@@ -173,13 +174,17 @@ create_edit_user = () =>{
     let passwd = $("#passwd").val();
     let email = $("#email").val();
     let range = $("#range").val();
+    let library = $("#library_active").is(':checked');
     let state = ($("#state").val() == "Activo" ? 1 : 0);
+    
+    library ? active=1 : active =0;  //library active 
+     
     if(edit){
      url = "api/update_user";
-     data = {rut: rut, full_name: full_name, email:email, range:range, state: state, rut_old: rutEdit, email_old: emailEdit};
+     data = {rut: rut, full_name: full_name, email:email, range:range, state: state, rut_old: rutEdit, email_old: emailEdit,library_active:active};
     }else{
      url = "api/create_user";
-     data = {rut: rut, full_name: full_name, passwd:passwd,  email:email, range:range, state: 1};
+     data = {rut: rut, full_name: full_name, passwd:passwd,  email:email, range:range, state: 1,library_active:active};
     } 
 
     $.ajax({
@@ -277,6 +282,12 @@ des_hab_user= (rut, state) => {
 
 /*Función para preparar la información a editar*/
 show_info_update_user = (data) =>{
+    if(data.library_active==0){
+        $("#library_active").prop('checked',false);
+    }else{
+        $("#library_active").prop('checked',true);
+    }
+    
     edit = true;
     rutEdit = data.rut;
     emailEdit = data.email;
@@ -286,7 +297,6 @@ show_info_update_user = (data) =>{
     let a = $(`option[name ="${data.description}"]`).val();
     $("#range").val(a);
     $("#state").val(data.state);
-
     $("#frm_state").show();
     $("#frm_passwd").hide();
 

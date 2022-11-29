@@ -79,6 +79,7 @@
             </li>
 
           
+
              <!-- Nav Item - Utilities Collapse Menu -->
             
 
@@ -142,7 +143,18 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                    <li class="nav-item dropdown no-arrow">
+                         <li class="nav-item dropdown no-arrow">
+                            
+                            <a class="nav-link dropdown-toggle" href="#chat" id="modal_order" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                <span class="mr-2 d-none d-lg-inline text-white small"></span>
+                                    <i class="fas fa-file-invoice" id="order_search" style="color:white; font-size:30px"></i>
+                                <span class="mr-2 d-none d-lg-inline text-white " ></span>
+                            </a>
+                         </li>
+
+                          <li class="nav-item dropdown no-arrow">
                             
                             <a class="nav-link dropdown-toggle" href="#chat" id="list_notifications" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -225,6 +237,7 @@
                 </div>
                 <div class="modal-body">
                 <button class="btn btn-success" type="button" id="btn-check-all"  >Ver todo</button>
+                
                 <div class="table-responsive">
         
                             <table class="table table-bordered" id="table-notifications" width="100%" cellspacing="0">
@@ -249,6 +262,60 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="modal_search_orders" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog"  style="max-width: 1000px!important;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="exampleModalLabel">Búsqueda de OT </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+                <div class="form-group">
+        
+                           <input type="hidden" class="form-control" >
+                            <div class="form-group" >
+                                <label>Número de orden</label>
+                                <input type="text" class="form-control" id="search_number" name="name" placeholder="Ingrese nombre">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <button class="btn btn-primary" id="btn-search-ot" type="button">Buscar</button>
+
+                </div>
+
+
+                
+                <div class="table-responsive">
+        
+                            <table class="table table-bordered" id="table_order_search" width="100%" cellspacing="0">
+                                <thead>
+                                         <tr>
+                                             <th>OT</th>
+                                             <th>Cliente</th>
+                                             <th>Componente</th>
+                                             <th>Descripcion</th>
+                                             <th>Detalles</th>
+                                             
+                                         </tr>
+                                </thead>
+                             </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button"  data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" id="logout" >Salir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.min.js"></script>

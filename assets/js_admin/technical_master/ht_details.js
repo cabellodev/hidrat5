@@ -3,7 +3,6 @@ $(() => {
     get_data_ht();
 	getFields_ht();
 	get_info_ht();
-	get_all_notifications_ht();
    
 });
 
@@ -12,8 +11,6 @@ let check_admin_old = false;
 let check_technical_old_ht = false;
 let config =[]; // la configuracion de medidas de la prueba 
 let medida = []; // es el arreglo donde almacena los datos de las medidas de la prueba hidraulica 
-let technicals_user_htt = 0; 
-let list_technical_notification_ht = [];
 
 
 
@@ -132,10 +129,8 @@ edit_ht = () => { // editar la informacion de la prueba hidraulica
 				ht_enableFields();
 				unable_edition();
 				get_data_ht();
-				get_all_notifications_ht();
 				swal.close();
 			   });
-			   notification_technical_ht(data.technical,4);
 		},
 		error: (result) => {
             swal({
@@ -179,105 +174,102 @@ get_data_ht = () =>{
 					$("#approve_admin_ht" ).prop('checked', true);
 					check_admin_old = true;
 
-			    } else {
-					$( "#approve_admin_ht" ).prop('checked', false );
-				    check_admin_old = false;                               
-				}
+			    
 
-			    if(ht.approve_technical === "true"){
-					$("#btn_export_ht").show();
-					$("#approve_technical_ht").prop('checked', true);
-					check_technical_old_ht=true;
-			    } else {
-					$("#approve_technical_ht" ).prop('checked', false );
-					$("#btn_export_ht").hide();
-					check_technical_old_ht=false;
-				}
+			            if(ht.approve_technical === "true"){
+					        $("#btn_export_ht").show();
+					        $("#approve_technical_ht").prop('checked', true);
+					          check_technical_old_ht=true;
+			            } else {
+					      $("#approve_technical_ht" ).prop('checked', false );
+					      $("#btn_export_ht").hide();
+					       check_technical_old_ht=false;
+				         }
 				
-				$( "#date_ht" ).val(ht.date_ht);
-				$( "#conclusion_ht" ).val(ht.conclusion);
-				$( "#notes_ht" ).val(ht.notes);
-				$( "#technical_ht" ).val(technical);
-			
-			}else{
-				$( "#date_ht" ).val('');
-				$( "#conclusion_ht" ).val('');
-				$( "#notes_ht" ).val('');
-				$( "#approve_technical_ht" ).prop('checked', false);
-			    $( "#approve_admin_ht" ).prop('checked', false);
-	
-			}
+				        $( "#date_ht" ).val(ht.date_ht);
+				        $( "#conclusion_ht" ).val(ht.conclusion);
+				        $( "#notes_ht" ).val(ht.notes);
+				        $( "#technical_ht" ).val(technical);
 
-			if(data2){
-				let us = JSON.parse(data2);//linea nueva
-			
-				$("#user_create").val(us.user_create);//lineas nuevas
-				$("#user_modify").val(us.user_modify);
-				$("#user_approve").val(us.user_approve);
-				$("#date_create").val(us.date_create);
-				$("#date_modify").val(us.date_modify);
-				$("#date_approve").val(us.date_approve);//fin lineas nuevas
-				$("#technical_name_ht" ).val(technical);
+						if(data2){
+							let us = JSON.parse(data2);//linea nueva
+						
+							$("#user_create").val(us.user_create);//lineas nuevas
+							$("#user_modify").val(us.user_modify);
+							$("#user_approve").val(us.user_approve);
+							$("#date_create").val(us.date_create);
+							$("#date_modify").val(us.date_modify);
+							$("#date_approve").val(us.date_approve);//fin lineas nuevas
+							$("#technical_name_ht" ).val(technical);
+							
+							
+							
+						   $("#ht_popover").popover( 
 				
-                
+							  { html: true,
+								title: "Información",
+								content: "Creado por: " +us.user_create +"<br />"+"Fecha creación: "+ 
+								us.date_create+"<br />"+"Modificado por: " +us.user_modify+"<br />"+"Fecha mod.: "+ us.date_modify+"<br />"+
+								 "Aprobado por: " +us.user_approve+"<br />"+"Fecha aprv.: "+ us.date_approve,
+								});
+						
+						}else { 
+							$("#user_create").val("");//lineas nuevas
+							$("#user_modify").val("");
+							$("#user_approve").val("");
+							$("#date_create").val("");
+							$("#date_modify").val("");
+							$("#date_approve").val("");
+							$("#technical_name_ht" ).val("");
+							$("#ht_popover").popover( 
 				
-	           $("#ht_popover").popover( 
-	
-		          { html: true,
-		            title: "Información",
-		            content: "Creado por: " +us.user_create +"<br />"+"Fecha creación: "+ 
-					us.date_create+"<br />"+"Modificado por: " +us.user_modify+"<br />"+"Fecha mod.: "+ us.date_modify+"<br />"+
-		             "Aprobado por: " +us.user_approve+"<br />"+"Fecha aprv.: "+ us.date_approve,
-                	});
+								{ html: true,
+								  title: "Información",
+								  content: "Creado por: " +"" +"<br />"+"Fecha creación: "+ 
+								""+"<br />"+"Modificado por: " +""+"<br />"+"Fecha mod.: "+ ""+"<br />"+
+								   "Aprobado por: " +""+"<br />"+"Fecha aprv.: "+ "",
+								  });
+						}
 			
-			}else { 
-				$("#user_create").val("");//lineas nuevas
-				$("#user_modify").val("");
-				$("#user_approve").val("");
-				$("#date_create").val("");
-				$("#date_modify").val("");
-				$("#date_approve").val("");
-				$("#technical_name_ht" ).val("");
-				$("#ht_popover").popover( 
-	
-					{ html: true,
-					  title: "Información",
-					  content: "Creado por: " +"" +"<br />"+"Fecha creación: "+ 
-					""+"<br />"+"Modificado por: " +""+"<br />"+"Fecha mod.: "+ ""+"<br />"+
-					   "Aprobado por: " +""+"<br />"+"Fecha aprv.: "+ "",
-					  });
-			}
+						if(config){
+							let settings = JSON.parse(config);//linea nueva
+						
+							$("#speed_c").val(settings.config_speed);//lineas nuevas
+							$("#presion_c").val(settings.config_presion);
+							$("#caudal_c").val(settings.config_caudal);
+							$("#temperature_c").val(settings.config_time);
+						
+						
+						}else { 
+							$("#speed_c").val(true);//lineas nuevas
+							$("#presion_c").val(true);
+							$("#caudal_c").val(true);
+							$("#temperature_c").val(true);
+						}
+			
+			
+						if(technical){
+							let a = $(`option[name ="${technical}"]`).val();
+							$("#technical_ht").val(a);
+						}else{
+							$("#technical_ht").val('');
+						}
+					   
+						technicals_user_ht = xhr.response[0].user_assignment;
+						disabled_not_approveHt();
+			
+			     }else{
+			
+	                alert_not_approveHt();
+			     }
 
-			if(config){
-				let settings = JSON.parse(config);//linea nueva
 			
-				$("#speed_c").val(settings.config_speed);//lineas nuevas
-				$("#presion_c").val(settings.config_presion);
-				$("#caudal_c").val(settings.config_caudal);
-				$("#temperature_c").val(settings.config_time);
-			
-			
-			}else { 
-				$("#speed_c").val(true);//lineas nuevas
-				$("#presion_c").val(true);
-				$("#caudal_c").val(true);
-				$("#temperature_c").val(true);
-			}
-
-
-			if(technical){
-				let a = $(`option[name ="${technical}"]`).val();
-				$("#technical_ht").val(a);
-			}else{
-				$("#technical_ht").val('');
-			}
-           
-			technicals_user_ht = xhr.response[0].user_assignment;
-			technicals_user_htt= xhr.response[0].user_assignment;
-            disabledAlert_ht();
 		}else { 
-            alert_not_evaluation_ht(xhr.response.msg);
+            alert_not_approveHt();
         }
+	}else{
+		alert_not_approveHt();
+	}
 	});
 	xhr.send();
 }
@@ -291,6 +283,23 @@ alert_not_evaluation_ht = (msg)=>{
 }
 
 disabledAlert_ht= () =>{
+
+    $("#hydraulic_info" ).show();
+	$("#card-option-ht").show();
+    $("#alert_hydraulicTest").removeClass("alert alert-warning col-md-6 mb-3");
+    $("#alert_hydraulicTest").text('');
+    $("#title_alert_ht").css("display","none");
+}
+
+alert_not_approveHt = ()=>{
+	
+    $("#hydraulic_info" ).css("display","none");
+	$("#card-option-ht").css("display","none");
+    $("#alert_hydraulicTest").addClass("alert alert-warning col-md-6 mb-3").text("Aviso : "+ "Pendiente de aprobación por administración.");
+    $("#title_alert_ht").text( "Detalle:");
+}
+
+disabled_not_approveHt= () =>{
 
     $("#hydraulic_info" ).show();
 	$("#card-option-ht").show();
@@ -697,15 +706,17 @@ edit_info =()=>{
 			});	 
 		},
 	});
+
+
 }
 
 
-// sin utilizar 
+
 showExportHidraulicTest = () => { 
- 
+    console.log(config);
 	id= $("#ot_number").val();
 	let xhr = new XMLHttpRequest();
-	xhr.open("get", `${host_url}/api/getHydraulicTestByOrder/${id}`); //sincronico  :false  , asincronico : true 
+	xhr.open("get", `${host_url}/api/getHydraulicTestByOrder/${id}`);
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
@@ -727,15 +738,9 @@ showExportHidraulicTest = () => {
 	xhr.send();
 }
 
-report_ht = () => { 
- 
-	id= $("#ot_number").val();
-    file = 'assets/upload/hydraulicTest'+id+'.pdf';
-    url = host_url + file;
-    window.open(url);
-}
+	
 
-
+    
 clearInput=()=> { 
 	$("#title_modal").text("Agragar registro ");
 	$('#dato').val("");
@@ -745,6 +750,7 @@ clearInput=()=> {
 	 $('#time').val("");
 
 };
+
 
 
 save_config = () => { 
@@ -838,279 +844,7 @@ xhr.send();
 
 
 
-get_all_notifications_ht = ()=>{  // todas las notificaciones de technicos 
 
-	$.ajax({
-		type: "GET",
-		url: host_url + `api/getNotificationsTechnical`,
-		crossOrigin: false,
-		async:false,
-		dataType: "json",
-		success: (result) => {
-            list_technical_notification_ht = result;
-			console.log(list_technical_notification_ht);
-		},
-		error:()=>{
-             console.log("error");
-		}
-
-		
-	});
-}
-
-
-notification_technical_ht = (user,report)=>{ // crear notificaciones 
-  
-	ot= $("#id_ot").val();
-	message_hab="";
-	message_des="";
-
-    if(report==1){ // selecciona dependiendo del tipo de reporte
-		message_hab = `Se te ha asignado la Evaluación de la OT (${ot})`;
-		message_des = `Se te desvinculo de la Evaluación de la OT (${ot})`;
-		}else if(report==2){
-			message_hab= `Se te ha asignado el Reporte Técnico de la OT (${ot})`;
-			message_des = `Se te desvinculo el Reporte Técnico de la OT (${ot})`;
-		        }else if(report==3){
-		           message_hab = `Se te ha asignado la Reparación para la OT (${ot})`;
-				   message_des = `Se te desvinculo la Reparación de la OT (${ot})`;
-	                   }else if(report==4){
-		                    message_hab = `Se te ha asignado la Prueba Hidráulica de la OT (${ot})`;
-							message_des = `Se te desvinculo la Prueba Hidráulica de la OT (${ot})`;
-	                   }
-
-
-    if(list_technical_notification_ht.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
-	      
-		
-
-		  aux = [];
-		  object = { message:message_hab,
-			         date:moment().format(),
-					 ot:ot,
-					 state:true}
-
-		  aux.push(object);
-          data={user:user,messages:JSON.stringify(aux)}; 
-		
-
-		  $.ajax({
-			data: {
-				data,
-			},
-			type: "POST",
-			url: host_url + `api/createNotificationTechnical`,
-			crossOrigin: false,
-			dataType: "json",
-			success: (result) => {
-				console.log("exito del mensaje");
-			}	
-		});
-
-	}else{ // si ya existen usuarios , buscar el usuario y agregar mensaje a la coleccion de mensajes 
-	
-        let user_exist = false;
-		
-		list_technical_notification_ht.forEach((x) => {
-			
-				if(x.user == user){ 
-
-
-					user_exist=true;
-					
-					aux = JSON.parse(x.messages);
-
-					object={message:message_hab,
-						date:moment().format(),
-						ot:ot,
-						state:true}
-
-					aux.push(object);
-					data ={user:user,messages:JSON.stringify(aux)};
-					
-				       $.ajax({
-							data: {
-								data,
-							},
-							type: "POST",
-							url: host_url + `api/createNotificationTechnical`,
-							crossOrigin: false,
-							dataType: "json",
-							success: (result) => {
-							  console.log("exito del mensaje");
-							}	
-						});
-				  }
-			
-           });
-
-		if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
-           
-			aux = [];
-			object= { message:message_hab,date:moment().format(),ot:ot,state:true}
-			aux.push(object);
-			data={user:user,messages:JSON.stringify(aux)}; 
-			
-			$.ajax({
-			  data: {
-				  data,
-			  },
-			  type: "POST",
-			  url: host_url + `api/createNotificationTechnical`,
-			  crossOrigin: false,
-			  dataType: "json",
-			  success: (result) => {
-				  console.log("exito del mensaje");
-			  }	
-		    });
-		}
-
-        if(technicals_user_htt){ 
-		
-				if(user != technicals_user_htt){ // si cambia de usuario , se le envia notificacion de desvinculo al tecnico anterior
-				
-					
-					let user_exist = false;
-					
-					list_technical_notification_ht.forEach((x) => {
-								
-									if(x.user == technicals_user_htt){ 
-
-										
-										user_exist=true;
-										aux = JSON.parse(x.messages);
-										object= { message:message_des,date:moment().format(),ot:ot,state:true}
-										aux.push(object);
-										
-										data ={user:technicals_user_htt,messages:JSON.stringify(aux)};
-										$.ajax({
-												data: {
-													data,
-												},
-												type: "POST",
-												url: host_url + `api/createNotificationTechnical`,
-												crossOrigin: false,
-												dataType: "json",
-												success: (result) => {
-												console.log("exito del mensaje");
-												}	
-											});
-									}
-					});
-				
-					if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
-						
-						aux = [];
-						object = { message:message_des,date:moment().format(),ot:ot,state:true}
-						aux.push(object);
-						data={user:technicals_user_htt,messages:JSON.stringify(aux)}; 
-						
-						$.ajax({
-						  data: { data, },
-						  type: "POST",
-						  url: host_url + `api/createNotificationTechnical`,
-						  crossOrigin: false,
-						  dataType: "json",
-						  success: (result) => {
-							  console.log("exito del mensaje");
-						  }	
-						});
-					}
-				}
-	  		 }
-    }
-
-
-} // fin de la funcion de notificaciones de asignaciones 
-
-notification_manual_ht = () => {
-
-   let message = $("#notification_manual_ht").val();
-   let user = $("#technical_ht").val();
-   let ot= $("#id_ot").val();
-
-   if(user!=""){
-
-	if(list_technical_notification_ht.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
-	   
-		aux = [];
-		object = { message:message,date:moment().format(),ot:ot,state:true}
-		aux.push(object);
-		data={user:user,messages:JSON.stringify(aux)}; 
-		
-		$.ajax({
-		  data: {
-			  data,
-		  },
-		  type: "POST",
-		  url: host_url + `api/createNotificationTechnical`,
-		  crossOrigin: false,
-		  dataType: "json",
-
-		success: (result) => {
-					swal({
-						title: "Exito",
-						icon: "success",
-						text: "La notificación fue enviada con éxito.",
-						button: "OK",
-					}).then(() => {
-						$("#modal_notification_ht").modal('hide');
-						get_all_notifications_ht(); 
-					});
-				}	
-	  });
-
-  }else{ // si ya existen usuarios , buscar el usuario y agregar mensaje a la coleccion de mensajes 
-	 
-	  let user_exist = false;
-	  list_technical_notification_ht.forEach((x) => {
-		  
-			  if(x.user == user){ 
-				  user_exist=true;
-				  aux = JSON.parse(x.messages);
-				  object = { message:message,date:moment().format(),ot:ot,state:true}
-				  aux.push(object);
-				  data ={user:user,messages:JSON.stringify(aux)};
-					 $.ajax({
-						  data: {
-							  data,
-						  },
-						  type: "POST",
-						  url: host_url + `api/createNotificationTechnical`,
-						  crossOrigin: false,
-						  dataType: "json",
-						  success: (result) => {
-							swal({
-								title: "Exito",
-								icon: "success",
-								text: "La notificación fue enviada con éxito.",
-								button: "OK",
-							}).then(() => {
-								$("#modal_notification_ht").modal('hide');
-								get_all_notifications_ht(); 
-							});
-						  }	
-					  });
-			  }
-		 });
-	}
-}else{
-	swal({
-		title: "Atención",
-		icon: "warning",
-		text: "Debe asignar un técnico para enviar notificaciones",
-		button: "OK",
-	});
-
-}
-}
-
-$("#send_notification_ht").on("click",()=>{
-	$("#modal_notification_ht").modal("show");
-});
-$("#send_technical_ht").on("click",notification_manual_ht);   // NOTIFICATIONS CODE END
-
-////////////////////////////////////////////////////////////////////////////
 
 $("#ht_btnEdit").on("click", ht_enableFields);
 
@@ -1119,7 +853,7 @@ $("#btn_config").on("click", ()=>{
 }); 
 
 $("#btn_export_ht").on("click",()=>{
-	report_ht();
+	showExportHidraulicTest();
 });
 $("#btn_hidraulic").on("click", edit_ht);
 $("#save_config").on("click", save_config);
