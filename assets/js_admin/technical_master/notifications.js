@@ -1,11 +1,13 @@
 $(() => {
-	get_all_notification();
+get_all_notification();
    
 });
+
 
 setInterval(function () {
     get_news_notifications();
 }, 15000);
+
 
 let count_old=0;
 let count_new=0;

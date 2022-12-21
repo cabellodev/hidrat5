@@ -135,7 +135,13 @@ edit_ht = () => { // editar la informacion de la prueba hidraulica
 				get_all_notifications_ht();
 				swal.close();
 			   });
-			   notification_technical_ht(data.technical,4);
+
+			   if(!data.approve_admin){
+				notification_technical_ht(data.technical,4);
+				}else{
+				   console.log("no es posible enviar otra notificacion");
+				}
+			   
 		},
 		error: (result) => {
             swal({

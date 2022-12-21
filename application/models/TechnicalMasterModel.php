@@ -9,22 +9,21 @@ class TechnicalMasterModel extends CI_Model
 
     public function orderById($id){
 
-            $this->db->select('ot.id ,ot.description, component.name as component , enterprise.name as client');
-            $this->db->from('ot');
-            $this->db->join('component', 'component.id = ot.component_id');
-            $this->db->join('enterprise', 'enterprise.id = ot.enterprise_id');
-            $this->db->where('ot.id', $id);
+        $this->db->select('ot.id ,ot.description, component.name as component , enterprise.name as client');
+        $this->db->from('ot');
+        $this->db->join('component', 'component.id = ot.component_id');
+        $this->db->join('enterprise', 'enterprise.id = ot.enterprise_id');
+        $this->db->where('ot.id', $id);
 
-            $query= $this->db->get();
-            if(sizeof($query->result())==0){
-                return false; 
+        $query= $this->db->get();
+        if(sizeof($query->result())==0){
+            return false; 
 
-            }else{
-                return  $query->result_array();
-            }
+        }else{
+            return  $query->result_array();
+        }
 
-    }
-
+}
     public function  getHydraulicTestEnable () { 
         
         $user= $_SESSION['id'];
@@ -60,7 +59,7 @@ class TechnicalMasterModel extends CI_Model
     
 
         $query = "SELECT tr.ot_id number_ot,e.name enterprise, ot.priority ,tr.user_interaction , tr.details details,
-         ot.type_service service, tr.time_init, tr.aux, tr.time_end,ot.description, tr.date_priority 
+         ot.type_service service, tr.time_init, tr.aux, tr.time_end,ot.description
 
         FROM technical_report tr 
         JOIN ot ON tr.ot_id = ot.id
@@ -183,7 +182,7 @@ class TechnicalMasterModel extends CI_Model
 
         $query = "SELECT ot.id number_ot,ot.problem, ot.date_admission date, 
         ot.description description, ot.type_service service, e.name enterprise,
-         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state ,ev.time_init, ev.aux, ev.time_end, ev.priority,ev.date_priority
+         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state ,ev.time_init, ev.aux, ev.time_end, ev.priority
         FROM ot
         JOIN enterprise e ON ot.enterprise_id = e.id
         JOIN component c ON ot.component_id = c.id
@@ -199,10 +198,10 @@ class TechnicalMasterModel extends CI_Model
                   WHERE j.ot_id = ot.id
                 ) 
           ) 
-        ORDER BY ev.date_priority  DESC
         "; 
         return  $this->db->query($query,array(true,$user))->result(); 
      }
+
      
     public function getSubstaksReparation($id){
         $query = "SELECT sr.id, sr.state, sr.ot_id number_ot, sr.date_assigment date, sr.check_tm, sr.check_at, u.full_name technical_assistant, s.name substask
