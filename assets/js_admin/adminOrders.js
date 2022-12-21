@@ -17,8 +17,8 @@ $(() => {
 $("#newOrder").on('click', () => {
 	/* $('#input_search_0').val('4'); */
 	let a = $('#input_search_0').val();
-	console.log('Con el boton el valor es:'+a);
-	/* window.open(host_url+'newOrder', '_self'); */
+	
+	 window.open(host_url+'newOrder', '_self'); 
 })
 currentName="2428628432869191297121313173";
 /*Funcion para recuperar las ordenes de trabajo*/

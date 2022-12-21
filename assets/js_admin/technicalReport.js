@@ -361,7 +361,8 @@ saveTechnicalReport = () =>{
             check_technical_old: tr_check_technical_old,
             profile: 'admin',
         } 
-        console.log(data);
+        console.log(data.check_adm);
+        
        $.ajax({
             type: "POST",
             url: host_url + "api/editTechnicalReport",
@@ -387,7 +388,12 @@ saveTechnicalReport = () =>{
                 get_data_technical_report();
                 get_all_notifications_tr(); 
              });
+             if(!data.check_adm){
              notification_technical_tr(data.technical,2);
+             }else{
+                console.log("no es posible enviar otra notificacion");
+             }
+
             }, 
             statusCode: {
              405: (xhr) =>{

@@ -241,7 +241,7 @@ edit_evaluation = () => {
 		
 	};
 
-   console.log(data);
+ 
 
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
@@ -264,8 +264,13 @@ edit_evaluation = () => {
 				get_data_evaluation();
 				get_all_notifications(); 
 			   });
-
-			notification_technical(data.technical,1); // tecnico y reporte numero 1 = evaluacion
+			   if(!data.approve_admin){
+				notification_technical(data.technical,1);
+				}else{
+				   console.log("no es posible enviar otra notificacion");
+				}
+   
+			 // tecnico y reporte numero 1 = evaluacion
 		},
 		error: (result) => {
             swal({

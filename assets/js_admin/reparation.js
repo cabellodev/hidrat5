@@ -254,8 +254,7 @@ saveReparation = () =>{
                 user_approve: user_approve,
                 technical_assignment: $('#r_technical option:selected').text(),
             } 
-            console.log(data.technical_assignment);
-            console.log(data.user_assignment);
+            console.log(data.check_adm);
         
             $.ajax({
                 type: "POST",
@@ -276,7 +275,12 @@ saveReparation = () =>{
                     get_all_notifications_rep();
                  });
 
-                 notification_technical_rep(data.user_assignment,3);
+                 if(!data.check_adm){
+                    notification_technical_rep(data.user_assignment,3);
+                    }else{
+                       console.log("no es posible enviar otra notificacion");
+                    }
+                
                 }, 
                 statusCode: {
                  405: (xhr) =>{
@@ -323,8 +327,7 @@ saveReparation = () =>{
             user_approve: user_approve,
             technical_assignment: $('#r_technical option:selected').text(),
         } 
-        console.log(data.technical_assignment);
-        console.log(data.user_assignment);
+      
         $.ajax({
             type: "POST",
             url: host_url + "api/editReparation",
@@ -343,7 +346,14 @@ saveReparation = () =>{
                 get_data_reparation();
                 get_all_notifications_rep();
              });
-             notification_technical_rep(data.user_assignment,3);
+
+
+             if(data.check_adm !=1){
+                notification_technical_rep(data.user_assignment,3);
+                }else{
+                   console.log("no es posible enviar otra notificacion");
+                }
+            
             }, 
             statusCode: {
              405: (xhr) =>{

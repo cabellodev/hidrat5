@@ -10,11 +10,13 @@ $(document).on({
 $(() => {
     getFields();
     autoincrementID();
+    get_all_notifications();
 });
 
 $("#service").selectize({
     sortField: "text",
 });
+
 
 $("#priority").selectize({
     sortField: "text",
@@ -252,7 +254,8 @@ createOrder = () => {
                 text: "órden de trabajo ingresada con éxito",
                 button: "OK",
             }).then(() => {
-                window.location.assign(host_url+"adminOrders");
+                notifications_technical(data.technical,data.technical_tr);
+             window.location.assign(host_url+"adminOrders");
             });
             }, 
             statusCode: {
@@ -299,6 +302,148 @@ createOrder = () => {
         })
     }     
 }
+
+let list_technical_notification=[];
+
+get_all_notifications = ()=>{  // todas las notificaciones de technicos 
+
+	$.ajax({
+		type: "GET",
+		url: host_url + `api/getNotificationsTechnical`,
+		crossOrigin: false,
+		async:false,
+		dataType: "json",
+		success: (result) => {
+            list_technical_notification= result;
+			console.log(list_technical_notification);
+		},
+		error:()=>{
+             console.log("error");
+		}
+
+		
+	});
+}
+
+
+
+notifications_technical =(technical_ev , technical_tr)=>{
+     
+      let ot= $('#ot_number').val();
+      //1 = evaluation , 2 = technical_report
+      let technicals =[{report:1, technical:technical_ev}, {report:2, technical:technical_tr}];
+      let data={};
+
+      technicals.forEach(x=>{
+        
+                if(x.report==1){
+                    if(x.technical !=""){ 
+                        message=`Se le ha asignado la evaluación de la OT ${ot}`;
+                        send_message(x.technical,list_technical_notification,message,ot);
+                    }
+                }else{
+                    if(x.technical !=""){ 
+                        message=`Se le ha asignado el reporte técnico de la OT ${ot}`;
+                        send_message(x.technical,list_technical_notification,message,ot);
+                       // message(message, technical);
+                    }
+                }
+      });
+}
+
+
+send_message =(technical,list_technical_notification,message,ot)=>{
+
+    if(list_technical_notification==0){
+        aux = [];
+        object = { message:message,
+                   date:moment().format(),
+                   ot:ot,
+                   state:true}
+
+        aux.push(object);
+        data={user:technical,messages:JSON.stringify(aux)};
+        $.ajax({
+            data: {
+                data,
+            },
+            type: "POST",
+            url: host_url + `api/createNotificationTechnical`,
+            crossOrigin: false,
+            async:false,
+            dataType: "json",
+            success: (result) => {
+                
+                get_all_notifications();
+              
+            }	
+        });
+
+    }else{
+
+        let user_exist = false;
+        list_technical_notification.forEach((x) => {
+            
+                if(x.user == technical){ 
+                    user_exist=true;
+                    aux = JSON.parse(x.messages);
+
+                    object={message:message,
+                        date:moment().format(),
+                        ot:ot,
+                        state:true}
+
+                    aux.push(object);
+                    data ={user:technical,messages:JSON.stringify(aux)};
+                       $.ajax({
+                            data: {
+                                data,
+                            },
+                            type: "POST",
+                            async:false,
+                            url: host_url + `api/createNotificationTechnical`,
+                            crossOrigin: false,
+                            dataType: "json",
+                            success: (result) => {
+                            
+                                get_all_notifications();
+                             
+                            }	
+                        });
+                }
+           });
+
+        if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
+
+            aux = [];
+            object= { message:message,date:moment().format(),ot:ot,state:true}
+            aux.push(object);
+            data={user:technical,messages:JSON.stringify(aux)}; 
+            
+            $.ajax({
+              data: {
+                  data,
+              },
+              type: "POST",
+              async:false,
+              url: host_url + `api/createNotificationTechnical`,
+              crossOrigin: false,
+              dataType: "json",
+              success: (result) => {
+               
+                get_all_notifications();
+                  
+              }	
+            });
+        }
+    }  
+
+}
+
+
+
+
+
 
 /*Función para manejo de errores*/
 addErrorStyle = errores => {
