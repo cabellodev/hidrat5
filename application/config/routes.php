@@ -181,6 +181,8 @@ $route['api/editAprobation/(:num)']['POST'] = 'Aprobation/editAprobation/$1';
 $route['api/editOC/(:num)']['POST'] = 'Aprobation/editOC/$1';
 $route['api/getOC/(:num)']['GET'] = 'Aprobation/getOC/$1';
 $route['api/deleteOC/(:num)']['POST'] = 'Aprobation/deleteOC/$1';
+$route['api/updateNumberBilling']['POST'] = 'Aprobation/updateNumberBilling';
+
 
 //api reparation 
 $route['api/getReparationByOrder/(:num)']['GET'] = 'Reparation/getReparationByOrder/$1';
@@ -354,7 +356,6 @@ $route['searchDocumentation']['GET']='Library/searchDocumentation';
 $route['api/change_state_document']['POST']='Library/change_state_documents';
 $route['api/get_document_active']['GET']='Library/get_document_active';
 $route['api/access_user']['GET']='Library/access_user';
-
 //notifications
 $route['api/get_notifications']['GET']='Notifications/get_notifications';
 $route['api/change_notification/(:num)']['POST']='Notifications/change_notification/$1';
@@ -363,6 +364,8 @@ $route['api/change_notification/(:num)']['POST']='Notifications/change_notificat
 $route['api/get_user_notifications']['GET']='Notifications/get_user_notifications';
 
 // notification_technical
+
+$route['api/notifications/user/admin']['GET']='NotificationTechnical/getUserAdmin';
 $route['api/getNotificationsTechnical']['GET']='NotificationTechnical/getNotifications';
 $route['api/createNotificationTechnical']['POST']='NotificationTechnical/createNotification';
 
@@ -371,23 +374,7 @@ $route['api/changeState']['POST']='NotificationTechnical/changeState';
 
 $route['api/technicalMaster/getOrderById/(:num)']['GET']='TechnicalMaster/orderById/$1';
 $route['api/stageOrderTechnical']['GET']='TechnicalMaster/stagesOrderTechnicals';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$route['api/notification_late']['GET']='NotificationLate/get_orders_late';
 
 
 

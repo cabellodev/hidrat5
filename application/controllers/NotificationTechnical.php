@@ -35,6 +35,21 @@ class NotificationTechnical extends CI_Controller
     }
 
 
+    public function  getUserAdmin(){
+       
+        if ($this->accesscontrol->checkAuth()['correct']) {
+                  $user=$_SESSION['full_name'];
+                  $this->response->sendJSONResponse(array('msg' => $user), 200);
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+    }
+
+
+
+
+
+
 
     public function  getNotifications()
     { 

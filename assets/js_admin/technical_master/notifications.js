@@ -3,7 +3,6 @@ get_all_notification();
    
 });
 
-
 setInterval(function () {
     get_news_notifications();
 }, 15000);
@@ -125,7 +124,7 @@ const tabla_notification = $("#table-notifications").DataTable({
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
-    "order": [[ 1, "desc" ]],
+    "order": [[ 2, "desc" ]],
     columnDefs: [
         { "width": "20%", "targets": 0 }, /*Id */
         { "width": "30%", "targets": 1 }, /*Id */
@@ -145,8 +144,17 @@ const tabla_notification = $("#table-notifications").DataTable({
             
         }},
         
+        {defaultContent: "Indefinido",
+        "render": function (data, type, row){
+            if(row.transmitter){
+                return `${row.transmitter}`;
+            }
+        }
+         },
+        
         { data: "date" },
         { data: "ot" },
+        
         {   defaultContent: "oc",
         "render": function (data, type, row){
         

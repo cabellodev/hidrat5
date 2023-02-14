@@ -8,7 +8,7 @@ class AprobationModel extends CI_Model {
 
     public function getAprobationByOrder($id){
       
-        $query= "SELECT user_interaction , approve_client , date_quotation , date_send_qt , number_qt ,date_send_email 
+        $query= "SELECT user_interaction , approve_client , date_quotation , date_send_qt , number_qt ,number_billing,date_send_email 
         FROM quotation
         WHERE ot_id = ? ";
         
@@ -53,9 +53,20 @@ class AprobationModel extends CI_Model {
         $approve_client=false;
         if($data['approve_client']=="true"){ $approve_client= true;} 
         
-        $query = "UPDATE quotation SET approve_client = ? ,date_send_qt= ? , number_qt= ?  , date_quotation = ? ,user_interaction = ?  WHERE ot_id = ?";
-            return $this->db->query($query, array( $approve_client, $data['date_ap'] ,$data['qt_number'],$data['date_send'], $user_interaction, $id));  
+        $query = "UPDATE quotation SET approve_client = ? ,date_send_qt= ? , number_qt= ?  ,number_billing =?, date_quotation = ? ,user_interaction = ?  WHERE ot_id = ?";
+            return $this->db->query($query, array( $approve_client, $data['date_ap'] ,$data['qt_number'],$data['bill_number'],$data['date_send'], $user_interaction, $id));  
     } 
+
+
+    public function updateNumberBilling($data)
+    {   
+        
+
+        $sql = "UPDATE  quotation SET number_billing  = ? WHERE ot_id = ?"; //crear campo file en base de datos phpmyadmin
+        return $this->db->query($sql, array($data['number_billing'], $data['ot_number']));
+        
+    }
+
 
 
 

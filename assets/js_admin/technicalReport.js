@@ -73,13 +73,11 @@ get_data_technical_report = () =>{
 			let data = xhr.response[0][0].data;
             
 			let data_images = xhr.response[0][0].data_images;
-     
 
             let data_interaction = xhr.response[0][0].data_interaction;
 
             let user = xhr.response[0][0].user;
             technicals_user_tr =xhr.response[0][0].user;
-           
             if(data){
                 technical_report = JSON.parse(data);
                 $("#tr_date_technical_report").val(technical_report.date_technical_report);
@@ -361,8 +359,6 @@ saveTechnicalReport = () =>{
             check_technical_old: tr_check_technical_old,
             profile: 'admin',
         } 
-        console.log(data.check_adm);
-        
        $.ajax({
             type: "POST",
             url: host_url + "api/editTechnicalReport",
@@ -389,10 +385,10 @@ saveTechnicalReport = () =>{
                 get_all_notifications_tr(); 
              });
              if(!data.check_adm){
-             notification_technical_tr(data.technical,2);
-             }else{
+                notification_technical_tr(data.technical,2);
+                }else{
                 console.log("no es posible enviar otra notificacion");
-             }
+                }
 
             }, 
             statusCode: {
@@ -561,8 +557,6 @@ addErrorStyle = errores => {
 };
 
 
-
-
 get_all_notifications_tr = ()=>{  // todas las notificaciones de technicos 
 
 	$.ajax({
@@ -612,7 +606,9 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 		  object = { message:message_hab,
 			         date:moment().format(),
 					 ot:ot,
-					 state:true}
+					 state:true,
+                     transmitter:transmitter
+                    }
 
 		  aux.push(object);
           data={user:user,messages:JSON.stringify(aux)}; 
@@ -643,7 +639,8 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 					object={message:message_hab,
 						date:moment().format(),
 						ot:ot,
-						state:true}
+						state:true,
+                        transmitter:transmitter}
 
 					aux.push(object);
 					data ={user:user,messages:JSON.stringify(aux)};
@@ -665,7 +662,8 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 		if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
 
 			aux = [];
-			object= { message:message_hab,date:moment().format(),ot:ot,state:true}
+			object= { message:message_hab,date:moment().format(),ot:ot,state:true,
+                transmitter:transmitter}
 			aux.push(object);
 			data={user:user,messages:JSON.stringify(aux)}; 
 			
@@ -695,7 +693,8 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 									if(x.user == technicals_user_tr){ 
 										user_exist=true;
 										aux = JSON.parse(x.messages);
-										object= { message:message_des,date:moment().format(),ot:ot,state:true}
+										object= { message:message_des,date:moment().format(),ot:ot,state:true,
+                                            transmitter:transmitter}
 										aux.push(object);
 										console.log(aux);
 										data ={user:technicals_user_tr,messages:JSON.stringify(aux)};
@@ -717,7 +716,8 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 					if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
 
 						aux = [];
-						object = { message:message_des,date:moment().format(),ot:ot,state:true}
+						object = { message:message_des,date:moment().format(),ot:ot,state:true,
+                            transmitter:transmitter}
 						aux.push(object);
 						data={user:technicals_user_tr,messages:JSON.stringify(aux)}; 
 						
@@ -748,7 +748,8 @@ notification_manual_tr = () => {
 	if(list_technical_notification_tr.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
 	   
 		aux = [];
-		object = { message:message,date:moment().format(),ot:ot,state:true}
+		object = { message:message,date:moment().format(),ot:ot,state:true,
+            transmitter:transmitter}
 		aux.push(object);
 		data={user:user,messages:JSON.stringify(aux)}; 
 		
@@ -782,7 +783,8 @@ notification_manual_tr = () => {
 			  if(x.user == user){ 
 				  user_exist=true;
 				  aux = JSON.parse(x.messages);
-				  object = { message:message,date:moment().format(),ot:ot,state:true}
+				  object = { message:message,date:moment().format(),ot:ot,state:true,
+                    transmitter:transmitter}
 				  aux.push(object);
 				  data ={user:user,messages:JSON.stringify(aux)};
 					 $.ajax({
@@ -817,7 +819,6 @@ $("#send_notification_tr").on("click",()=>{
 $("#send_technical_tr").on("click",notification_manual_tr);  
 
 // NOTIFICATIONS CODE END
-
 
 $("#tr_btn_add").on("click", createFields);
 

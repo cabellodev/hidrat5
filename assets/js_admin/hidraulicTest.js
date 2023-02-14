@@ -135,13 +135,11 @@ edit_ht = () => { // editar la informacion de la prueba hidraulica
 				get_all_notifications_ht();
 				swal.close();
 			   });
-
 			   if(!data.approve_admin){
 				notification_technical_ht(data.technical,4);
 				}else{
 				   console.log("no es posible enviar otra notificacion");
 				}
-			   
 		},
 		error: (result) => {
             swal({
@@ -706,12 +704,12 @@ edit_info =()=>{
 }
 
 
-// sin utilizar 
+
 showExportHidraulicTest = () => { 
  
 	id= $("#ot_number").val();
 	let xhr = new XMLHttpRequest();
-	xhr.open("get", `${host_url}/api/getHydraulicTestByOrder/${id}`); //sincronico  :false  , asincronico : true 
+	xhr.open("get", `${host_url}/api/getHydraulicTestByOrder/${id}`);
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
@@ -894,7 +892,8 @@ notification_technical_ht = (user,report)=>{ // crear notificaciones
 		  object = { message:message_hab,
 			         date:moment().format(),
 					 ot:ot,
-					 state:true}
+					 state:true,
+					 transmitter:transmitter}
 
 		  aux.push(object);
           data={user:user,messages:JSON.stringify(aux)}; 
@@ -929,7 +928,8 @@ notification_technical_ht = (user,report)=>{ // crear notificaciones
 					object={message:message_hab,
 						date:moment().format(),
 						ot:ot,
-						state:true}
+						state:true,
+                        transmitter:transmitter}
 
 					aux.push(object);
 					data ={user:user,messages:JSON.stringify(aux)};
@@ -953,7 +953,8 @@ notification_technical_ht = (user,report)=>{ // crear notificaciones
 		if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
            
 			aux = [];
-			object= { message:message_hab,date:moment().format(),ot:ot,state:true}
+			object= { message:message_hab,date:moment().format(),ot:ot,state:true,
+				transmitter:transmitter}
 			aux.push(object);
 			data={user:user,messages:JSON.stringify(aux)}; 
 			
@@ -985,7 +986,8 @@ notification_technical_ht = (user,report)=>{ // crear notificaciones
 										
 										user_exist=true;
 										aux = JSON.parse(x.messages);
-										object= { message:message_des,date:moment().format(),ot:ot,state:true}
+										object= { message:message_des,date:moment().format(),ot:ot,state:true,
+											transmitter:transmitter}
 										aux.push(object);
 										
 										data ={user:technicals_user_htt,messages:JSON.stringify(aux)};
@@ -1007,7 +1009,8 @@ notification_technical_ht = (user,report)=>{ // crear notificaciones
 					if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
 						
 						aux = [];
-						object = { message:message_des,date:moment().format(),ot:ot,state:true}
+						object = { message:message_des,date:moment().format(),ot:ot,state:true,
+							transmitter:transmitter}
 						aux.push(object);
 						data={user:technicals_user_htt,messages:JSON.stringify(aux)}; 
 						
@@ -1040,7 +1043,8 @@ notification_manual_ht = () => {
 	if(list_technical_notification_ht.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
 	   
 		aux = [];
-		object = { message:message,date:moment().format(),ot:ot,state:true}
+		object = { message:message,date:moment().format(),ot:ot,state:true,
+			transmitter:transmitter}
 		aux.push(object);
 		data={user:user,messages:JSON.stringify(aux)}; 
 		
@@ -1074,7 +1078,8 @@ notification_manual_ht = () => {
 			  if(x.user == user){ 
 				  user_exist=true;
 				  aux = JSON.parse(x.messages);
-				  object = { message:message,date:moment().format(),ot:ot,state:true}
+				  object = { message:message,date:moment().format(),ot:ot,state:true,
+					transmitter:transmitter}
 				  aux.push(object);
 				  data ={user:user,messages:JSON.stringify(aux)};
 					 $.ajax({

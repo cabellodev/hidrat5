@@ -98,6 +98,7 @@ changeState = () => {
                         $("#state").val(state_change);
                         state = state_change;
                         get_history_states();
+                       
                      });
                     }, 
                     error: () => {
@@ -116,6 +117,9 @@ changeState = () => {
         }
     }); 
 }
+
+
+
 
 
 changeLocation = () => {

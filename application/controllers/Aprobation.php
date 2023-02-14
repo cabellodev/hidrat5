@@ -26,14 +26,19 @@ class Aprobation extends CI_Controller
         $date_ap = $data['date_ap'];
         $number_qt = $data['qt_number'];
         $ok=true;
-    
-        if (is_numeric ($number_qt)) { $ok=true;  }else{
-            $ok = false; 
-        }
 
-        if($number_qt<0){
-            $ok = false; 
+        if(!empty($number_qt)){
+    
+        if (is_numeric ($number_qt)) { 
+            if($number_qt<0){ $ok=false; }else{$ok=true;  }
+            }else{ 
+                
+                $ok = false; 
         }
+        }else{
+            $ok=true;
+        }
+     
        
         if($ok){ 
             $this->load->model('AprobationModel');
@@ -49,6 +54,32 @@ class Aprobation extends CI_Controller
             $this->response->sendJSONResponse( array("msg" => "No tiene los permisos suficientes "),400);
         }
     }
+
+
+    public function updateNumberBilling(){
+
+        if($this->accesscontrol->checkAuth()['correct']) {
+
+        $data = $this->input->post('data');
+       $ok=true;
+        if($ok){ 
+            $this->load->model('AprobationModel');
+            if($this->AprobationModel->updateNumberBilling($data)){
+            $this->response->sendJSONResponse( array("msg"=>"Se ha editado con éxito "));
+            }else{ 
+            $this->response->sendJSONResponse( array("msg" => "No se han podido editar los datos "),400); 
+            }
+            
+        }else { $this->response->sendJSONResponse( array( "msg"=>"Numero de cotización no válido." ),400); } 
+
+        }else {
+            $this->response->sendJSONResponse( array("msg" => "No tiene los permisos suficientes "),400);
+        }
+    }
+
+
+
+    
 
 
     public function editOC($id)

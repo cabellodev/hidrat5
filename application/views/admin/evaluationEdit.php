@@ -106,11 +106,9 @@
                     
           </div>
           <div class="form-group" style="margin-top: 40px; float:right;">
-    
               <button class="btn btn-success" value='0' type='button' id="hab_edit_ev"><i id='tr_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
               <button class="btn btn-success" style='display:none' type='button' id="btn_edit"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
           </div>
-         
 
           
            <!--  <div class="row mb-2 mr-2 mb-5 justify-content-end">
@@ -164,6 +162,6 @@
 </div>
 
 
-    <script src="<?php echo base_url(); ?>assets/js_admin/evaluation.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/evaluation.js?v=<?php echo(rand()); ?>"></script>
   
 
