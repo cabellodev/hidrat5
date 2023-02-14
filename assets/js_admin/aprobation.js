@@ -33,12 +33,14 @@ get_data_ap = () =>{
 				$( "#date_send_qt" ).val(data.date_quotation);
 				$( "#date_ap" ).val(data.date_send_qt);
 				$( "#number_qt").val(data.number_qt);
+				$( "#number_bill").val(data.number_billing);
 			
 			}else{
 				$( "#date_ap" ).val('');
 				$( "#date_send_qt" ).val('');
 				$( "#approve_client" ).prop('checked', false);
 				$( "#number_qt").val('');
+				$( "#number_bill").val('');
 	
 			}
 
@@ -76,6 +78,7 @@ ap_enableFields = ()=>{
         $('#date_ap').prop( "disabled", false );
 		$('#date_send_qt').prop( "disabled", false );
 		$("#number_qt").prop( "disabled", false );
+		$("#number_bill").prop( "disabled", false );
         $("#approve_client").prop( "disabled", false );
         $('#date_ap').datepicker({
             showOn: "button",
@@ -102,6 +105,7 @@ ap_enableFields = ()=>{
         $("#date_ap").prop( "disabled", true );
 		$('#date_send_qt').prop( "disabled", true);
 		$("#number_qt").prop( "disabled", true );
+		$("#number_bill").prop( "disabled", true );
         $("#approve_client").prop( "disabled", true );
         $("#date_ap").datepicker("destroy");
 		$("#date_send_qt").datepicker("destroy");
@@ -126,6 +130,7 @@ edit_ap = () => {
         date_ap :$("#date_ap").val(),
 		date_send :$("#date_send_qt").val(),
 		qt_number:$("#number_qt").val(),
+		bill_number:$("#number_bill").val(),
 		approve_client: $("#approve_client").is(':checked'),
 		user_approve: $("#user_approve_ap").val(),
 		date_approve:$("#date_approve_ap").val(),//fin

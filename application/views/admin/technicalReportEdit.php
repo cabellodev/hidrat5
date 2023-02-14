@@ -298,5 +298,5 @@
   </div>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js_admin/technicalReport.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/technicalReport.js?v=<?php echo(rand()); ?>"></script>
 
