@@ -58,8 +58,18 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">              
       <div class="modal-body" >
-      	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <img src="" class="imagepreview  " style="width: 100%;" >
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>  
+        <div class="row" style="display: flex; justify-content: center; align-items: center">
+          <div class="col-md-1 mb-3">
+            <a href="#"><i onclick="rotateLeft();"  style="margin-left:4px;" class="fas fa-undo fa-2x"></i></a>
+          </div>
+          <div style="display: flex; align-items: center; justify-content:center" class="col-md-10 mb-3">
+            <img class='imagepreview' id='imageRot' style="width: 80%;" >
+          </div>
+          <div class="col-md-1 mb-3">
+            <a href="#"><i onclick="rotateRight();"  class="fas fa-redo fa-2x"></i></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -116,6 +126,6 @@
   </div>
 </div>
 </div>
-
+<script src="<?php echo base_url(); ?>assets/vendor/rotate/rotate.js"></script>
 <script src="<?php echo base_url(); ?>assets/js_admin/imagenAdmin.js"></script>
 <script src="<?php echo base_url(); ?>assets/js_admin/editImagen.js"></script>

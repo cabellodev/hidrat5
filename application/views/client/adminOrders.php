@@ -36,7 +36,7 @@
             <thead>
             <tr>
                 <th>OT</th>
-                <th>Fecha de ingresos</th>
+                <th>Fecha de ingreso</th>
                 <th>Componente</th>
                 <th>Tipo de servicio</th>
                 <th>Estado</th>

@@ -1,6 +1,7 @@
 $(() => {
     get_data_reparation();
     get_all_notifications_rep(); 
+    get_data_reparation_subtareas();
 });
 
 let r_technicals = [];
@@ -11,7 +12,6 @@ let technicals_user_rep = 0;
 
 
 get_data_reparation = () =>{
-    
     id= $("#ot_number").val();
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getReparationByOrder/${id}`);
@@ -108,6 +108,74 @@ get_data_reparation = () =>{
 		}
 	});
 	xhr.send();
+}
+
+const table_reparation_subtask = $("#table_reparation_subtask").DataTable({
+	// searching: true,
+	language: {
+		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+	},
+	columnDefs: [
+        {className: "text-center", "targets": [0, 1, 2, 3 , 4, 5, 6]},
+    ],
+	columns: [
+        { data: "id" }, 
+        { data: "date" }, 
+        { data: "substask" }, 
+        { data: "technical_assistant" },
+        { data: "check_at" },  
+        { data: "check_tm" }, 
+        { defaultContent: "state",
+            "render": function (data, type, row){
+                if(row.state == "1"){
+                    return `<span> Activo</span>`
+                }else{
+                    return `<span> Bloqueado</span>`
+                }
+            }
+        }
+	],
+});
+
+get_data_reparation_subtareas = () => {
+    id= $("#ot_number").val();
+    $.ajax({
+        type: "GET",
+        url: `${host_url}/api/getSubstacksReparationByOrder/${id}`,
+        crossOrigin: false,
+        dataType: "json",
+
+        success: (result) => {
+            console.log(result);
+            let data = result.map((u) => {
+				
+                if(u.check_tm == '1') {
+                    u.check_tm = 'Aprobado';
+                }else{
+                    u.check_tm = 'No aprobado';
+                } 
+                
+                if(u.check_at == '1'){
+                    u.check_at = 'Realizado';
+                } else {
+                    u.check_at = 'No realizado';
+                }
+
+
+				return u;
+			});
+
+            table_reparation_subtask.clear();
+			table_reparation_subtask.rows.add(data);
+			table_reparation_subtask.draw();
+        }, error: () => {
+            swal({
+				title: "Error",
+				icon: "error",
+				text: "Error al obtener las subtareas2",
+			});
+        }
+    });
 }
 
 r_enableFields = ()=>{

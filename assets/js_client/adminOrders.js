@@ -61,7 +61,6 @@ get_orders = () => {
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
             let data =xhr.response;
-			console.log(data);
             tabla.clear();
 			tabla.rows.add(data);	
 			tabla.order( [ 1, 'desc' ] ).draw();

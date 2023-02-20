@@ -66,6 +66,41 @@ const table_i = $('#t_images').DataTable({
 	],
 });
 
+let r = 1;
+
+rotateLeft = () => {
+	alert('l');
+	$("#imageRot").css("transform", "rotate(-90deg)");
+}
+
+
+rotateRight = () => {
+	r++;
+	let degree;
+
+	//Inicial girar 90° a la derecha
+	if(r == 1){
+		degree = 90;
+	}
+
+	if(r == 2){
+		degree = 180;
+	}
+
+	if(r == 3){
+		degree = 270;
+	}
+
+	if(r == 4){
+		degree = 0;
+	}
+
+	$("#imageRot").rotate({
+		angle: 0,
+		animateTo: degree
+	});
+	
+}
 
 $("#t_images").on("click", "button", function () {
     let data = table_i.row($(this).parents("tr")).data();

@@ -22,6 +22,15 @@ class Reparation extends CI_Controller
         }
     }
 
+    public function getSubstacksByOrder($ot_id){
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $substacks=$this->ReparationModel->getSubstacksByOrder($ot_id);
+            $this->response->sendJSONResponse($substacks); 
+        }else {
+            redirect('Home/login', 'refresh');
+        }
+    }
+
 
     public function editReparation()
     { 

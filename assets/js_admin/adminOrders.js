@@ -15,10 +15,7 @@ $(() => {
 
 
 $("#newOrder").on('click', () => {
-	/* $('#input_search_0').val('4'); */
-	let a = $('#input_search_0').val();
-	console.log('Con el boton el valor es:'+a);
-	/* window.open(host_url+'newOrder', '_self'); */
+	window.open(host_url+'newOrder', '_self');
 })
 currentName="2428628432869191297121313173";
 /*Funcion para recuperar las ordenes de trabajo*/
@@ -188,7 +185,7 @@ const tabla = $('#table_orders').DataTable({
         { "width": "5%", "targets": 8 },  /*Administrar */
         { "width": "5%", "targets": 9 },  /*Editar */
 		{ "width": "5%", "targets": 10 },
-		{className: "text-center", "targets": [7, 8, 9]},
+		{className: "text-center", "targets": [7,8,9]},
     ],
 	columns: [
         { data: "number_ot"},

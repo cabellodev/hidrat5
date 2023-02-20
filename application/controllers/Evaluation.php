@@ -9,8 +9,10 @@ class Evaluation extends CI_Controller
     { 
         if ($this->accesscontrol->checkAuth()['correct']) {
             $this->load->model('EvaluationModel');
+            $location = $this->EvaluationModel->getLocationByOrder($id);
+            
             if($res=$this->EvaluationModel->getEvaluationByOrder($id)){
-                $this->response->sendJSONResponse($res); 
+                $this->response->sendJSONResponse(array($res, $location)); 
             }else{
                 $this->response->sendJSONResponse(array('msg' => 'Esta orden no tiene configurada una evaluación.'), 400); 
             }
@@ -20,6 +22,15 @@ class Evaluation extends CI_Controller
             }
     }
 
+    public function getSubstacksByOrder($ot_id){
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->model('EvaluationModel');
+            $substacks=$this->EvaluationModel->getSubstacksByOrder($ot_id);
+            $this->response->sendJSONResponse($substacks); 
+        }else {
+            redirect('Home/login', 'refresh');
+        }
+    }
 
     public function editEvaluation($id){
 
@@ -50,7 +61,7 @@ class Evaluation extends CI_Controller
             // $pdf = $this->fpdf_lib->pdfEvaluation($data);
              $pdf = $this->pdfEvaluation($data);
              $this->EvaluationModel->pdfEvaluation($id, $pdf);
-            $this->response->sendJSONResponse( array("msg"=>"Se ha editado con éxito "));
+             $this->response->sendJSONResponse( array("msg"=>"Se ha editado con éxito "));
            // $this->response->sendJSONResponse(array('msg' => "Cotización editada.", "resp" => $resp, "pdf" => $pdf));
             }else{ 
             $this->response->sendJSONResponse( array("msg" => "No se han podido editar los datos "),400); 

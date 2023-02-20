@@ -61,17 +61,26 @@
                       <div class="invalid-feedback"></div>
                   </div>
               </div>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-4 mb-3">
+                  <label>Ubicacion</label>
+                  <select class="custom-select d-block w-100" id="location_ev" name="location_ev" disabled>
+                      <option></option>
+                  </select>
+                  <div class="invalid-feedback"></div>
+              </div>
+              
+          </div>
+          <div class="row mb-2">          
+              <div class="col-md-12 mb-3">
                   <label for="actividad">Problema</label>
                   <div class="input-group" id='frm_date_admission'>
                       <input type="text" class="form-control"  name="problem" id="problem" disabled>
                       <div class="invalid-feedback"></div>
                   </div>
               </div>
-              
           </div>
           <div class="row mb-2">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-12 mb-3">
                   <label for="actividad">Descripción</label>
                     <div class="input-group">
                       <textarea type="text" class="form-control"  rows="2" name="description_ev" id="description_ev" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
@@ -80,7 +89,9 @@
                         </div>
                       </div>
               </div>  
-              <div class="col-md-6 mb-3">
+          </div>
+          <div class="row mb-2">
+              <div class="col-md-12 mb-3">
                   <label for="actividad">Notas</label>
                     <div class="input-group">
                       <textarea type="text" class="form-control"  rows="2" name="notes" id="notes" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>

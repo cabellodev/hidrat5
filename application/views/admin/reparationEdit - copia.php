@@ -109,41 +109,40 @@
         </div>
     </div>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header" id="headingTR">
             <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#reparacionSubareaPedido" aria-expanded="false">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#reparationSubtareas" aria-expanded="false" aria-controls="technicalReportGeneral">
                 <i class="fas fa-table"></i>
                 Subtareas
             </button>
             </h5>
         </div>
-        <div id="reparacionSubareaPedido" class="collapse">      
+        <div id="reparationSubtareas" class="collapse" aria-labelledby="headingTR">
             <div class="card-body">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    Lista de Subtareas asociadas a la OT
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="table_reparation_subtask" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Id </th>
-                                    <th>Fecha</th>
-                                    <th>Subtarea</th>
-                                    <th>Ayudante Tecnico</th>
-                                    <th>Realizado por Ayudante técnico </th>
-                                    <th>Aprobado por Técnico Master</th>
-                                    <th>Estado </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Lista de Subtareas asociadas a la OT
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-bordered" id="table_reparation_subtask" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id </th>
+                            <th>Fecha</th>
+                            <th>Subtarea</th>
+                            <th>Ayudante Tecnico</th>
+                            <th>Realizado por Ayudante técnico </th>
+                            <th>Aprobado por Técnico Master</th>
+                            <th>Estado </th>
+                        </tr>
+                    </thead>
+                </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group" style="margin-top: 40px; display: flex; align-items:center; justify-content: right;">
+    <div class="form-group" style="margin-top: 40px; display: flex; align-items:center; justify-content: center;">
         <button class="btn btn-success" value='0' type='button' id="r_btnEdit"><i id='r_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
         <button class="btn btn-success" style='display:none' type='button' id="r_btnSave"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
     </div>
