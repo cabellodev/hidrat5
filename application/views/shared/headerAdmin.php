@@ -20,6 +20,7 @@
 
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url(); ?>assets/css_admin/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/vendor/selectize/selectize.bootstrap3.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendor/DataTables/datatables.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/vendor/DataTables/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/vendor/jquery-ui-1.12.1.custom/jquery-ui.css" type="text/css" rel="stylesheet"/>
@@ -310,6 +311,7 @@
     <!-- Core plugin JavaScript-->
     <script src="<?php echo base_url(); ?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendor/DataTables/datatables.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendor/selectize/selectize.min.js"></script>
   
     <script src="<?php echo base_url(); ?>assets/sweetalert.min.js"></script>
     

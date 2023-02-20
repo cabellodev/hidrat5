@@ -1,9 +1,11 @@
 
 $(() => {
-    get_data_evaluation();
 	getFields();
+    get_data_evaluation();
 	get_all_notifications(); 
+	get_data_evaluation_subtareas();
 	get_admin_user();
+
 });
 
 
@@ -42,14 +44,13 @@ get_data_evaluation = () =>{
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-			
-			let data = xhr.response[0].details;
-			let technical=xhr.response[0].full_name;
-			let priority=xhr.response[0].priority;
-			let location=xhr.response[0].location;
+			let data = xhr.response[0][0].details;
+			let technical=xhr.response[0][0].full_name;
+			let priority=xhr.response[0][0].priority;
+			let location=xhr.response[0][0].location;
 			console.log(typeof(location));
-		    let data2 =xhr.response[0].user_interaction;
-			let file=xhr.response[0].export;
+		    let data2 =xhr.response[0][0].user_interaction;
+			let file=xhr.response[0][0].export;
 
         
 		
@@ -130,6 +131,75 @@ get_data_evaluation = () =>{
 
 	});
 	xhr.send();
+}
+
+
+const table_evaluation_subtask = $("#table_evaluation_subtask").DataTable({
+	// searching: true,
+	language: {
+		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+	},
+	columnDefs: [
+        {className: "text-center", "targets": [0, 1, 2, 3 , 4, 5, 6]},
+    ],
+	columns: [
+        { data: "id" }, 
+        { data: "date" }, 
+        { data: "substask" }, 
+        { data: "technical_assistant" },
+        { data: "check_at" },  
+        { data: "check_tm" }, 
+        { defaultContent: "state",
+            "render": function (data, type, row){
+                if(row.state == "1"){
+                    return `<span> Activo</span>`
+                }else{
+                    return `<span> Bloqueado</span>`
+                }
+            }
+        }
+	],
+});
+
+get_data_evaluation_subtareas = () => {
+    id= $("#ot_number").val();
+    $.ajax({
+        type: "GET",
+        url: `${host_url}/api/getSubstacksEvaluationByOrder/${id}`,
+        crossOrigin: false,
+        dataType: "json",
+
+        success: (result) => {
+            console.log(result);
+            let data = result.map((u) => {
+				
+                if(u.check_tm == '1') {
+                    u.check_tm = 'Aprobado';
+                }else{
+                    u.check_tm = 'No aprobado';
+                } 
+                
+                if(u.check_at == '1'){
+                    u.check_at = 'Realizado';
+                } else {
+                    u.check_at = 'No realizado';
+                }
+
+
+				return u;
+			});
+
+            table_evaluation_subtask.clear();
+			table_evaluation_subtask.rows.add(data);
+			table_evaluation_subtask.draw();
+        }, error: () => {
+            swal({
+				title: "Error",
+				icon: "error",
+				text: "Error al obtener las subtareas",
+			});
+        }
+    });
 }
 
 getLocation=(id)=>{
@@ -258,7 +328,7 @@ edit_evaluation = () => {
 		priority:$("#priority_ev").val(),
 		check_admin_old:check_admin_old_ev,
         check_technical_old:check_technical_old_ev,
-		
+		userAdmin:1,
 	};
 
 	Object.keys(data).map((d) => $(`.${d}`).hide());

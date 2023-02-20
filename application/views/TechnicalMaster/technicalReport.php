@@ -81,17 +81,24 @@
             <div id="technicalReportConclusion" class="collapse show" aria-labelledby="headingOne" >
                 <div class="card-body">
                     <div class="row mb-2">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label for="actividad">Conclusiones</label>
                             <div class="input-group">
-                                <textarea type="text" class="form-control" rows="2" name="tr_conclusion" id="tr_conclusion" placeholder="" aria-describedby="inputGroupPrepend3" readonly></textarea>
+                                <textarea type="text" class="form-control" name="tr_conclusion" id="tr_conclusion" placeholder="" aria-describedby="inputGroupPrepend3" readonly></textarea>
                             </div>
                         </div>  
-                        <div class="col-md-6 mb-3">
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-12 mb-3">
                             <label for="actividad">Recomendaciones</label>
                             <div class="input-group">
-                                <textarea type="text" class="form-control" rows="2" name="tr_recommendation" id="tr_recommendation" placeholder="" aria-describedby="inputGroupPrepend3" readonly></textarea>
+                                <textarea  type="text" class="form-control" name="tr_recommendation" id="tr_recommendation" placeholder="" aria-describedby="inputGroupPrepend3" readonly>
+                               
+                                </textarea>
                             </div>
+
+                            <!-- <div name="tr_recommendation" id="tr_recommendation" class="textarea" style="border:2px solid #FBFBFB; border-radius: 5px;" contenteditable="true"> -->
+                    
                         </div>  
                     </div>
                     <div class="row mb-2">

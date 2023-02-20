@@ -154,7 +154,7 @@ $route['api/counterOrders']['GET'] = 'Counter/getData';
 //api evaluation 
 $route['api/getEvaluationByOrder/(:num)']['GET'] = 'Evaluation/getEvaluationByOrder/$1';
 $route['api/editEvaluation/(:num)']['POST'] = 'Evaluation/editEvaluation/$1';
-
+$route['api/getSubstacksEvaluationByOrder/(:num)']['GET'] = 'Evaluation/getSubstacksByOrder/$1';
 
 //api hydraulicTEST
 $route['api/getHydraulicTestByOrder/(:num)']['GET'] = 'HydraulicTest/getHydraulicTestByOrder/$1';
@@ -186,6 +186,7 @@ $route['api/updateNumberBilling']['POST'] = 'Aprobation/updateNumberBilling';
 
 //api reparation 
 $route['api/getReparationByOrder/(:num)']['GET'] = 'Reparation/getReparationByOrder/$1';
+$route['api/getSubstacksReparationByOrder/(:num)']['GET'] = 'Reparation/getSubstacksByOrder/$1';
 $route['api/editReparation']['POST']  = 'Reparation/editReparation';
 $route['api/CalculateDateReparation']['POST']  = 'Reparation/calculateReparation';
 

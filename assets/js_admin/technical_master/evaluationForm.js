@@ -1,31 +1,42 @@
 $(() => {
     get_data_evaluation();
 	getFields();
-   
 });
+
+function autoresize(textarea) {
+    textarea.style.height = '0px';     //Reset height, so that it not only grows but also shrinks
+    textarea.style.height = (textarea.scrollHeight+10) + 'px';    //Set new height
+}
+
+$("#description_ev").keyup(function () {
+    autoresize(this);
+});
+
+$("#notes").keyup(function () {
+    autoresize(this);
+});
+
 let check_admin_old_ev = false;
 let check_technical_old_ev = false;
 let technicals_user = 0; 
 let location_ev= 0 ;
 
 get_data_evaluation = () =>{
-
     id= $("#ot_number").val();
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-			let data = xhr.response[0].details;
-			let technical=xhr.response[0].full_name;
-			let problem=xhr.response[0].problem;
-		    let data2 =xhr.response[0].user_interaction;
-			let priority=xhr.response[0].priority;
-		    location_ev =xhr.response[0].location;
+			let data = xhr.response[0][0].details;
+			let technical=xhr.response[0][0].full_name;
+			let problem=xhr.response[0][0].problem;
+		    let data2 =xhr.response[0][0].user_interaction;
+			let priority=xhr.response[0][0].priority;
+		    location_ev =xhr.response[1][0].location_id;
             
-			let file=xhr.response[0].export;
-
-        
+			let file=xhr.response[0][0].export;
+       
 		
 			if(data){
 				let evaluation= JSON.parse(data);
@@ -89,14 +100,12 @@ get_data_evaluation = () =>{
 			}
 
 			if(location_ev){
-			   
-              let a= $(`#location_ev option[value ="${location_ev}"]`).val();
+				$('#location_ev').val(location_ev);
 			  
 			}else{
-				
 				$("#location_ev").val("");
 			}
-			getLocation(id);
+			
 
 			if(technical){
 				let a = $(`option[name ="${technical}"]`).val();
@@ -105,6 +114,7 @@ get_data_evaluation = () =>{
 				$("#technical_ev").val('');
 			}
 			technicals_user = xhr.response[0].user_assignment;
+			console.log(technical);
 		    $("#technical_id").val(technicals_user);
             
 			disabledAlertEv();
@@ -115,25 +125,6 @@ get_data_evaluation = () =>{
 	});
 	xhr.send();
 }
-
-getLocation=(id)=>{
-	let xhr = new XMLHttpRequest();
-	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
-	xhr.responseType = "json";
-	xhr.addEventListener("load", () => {
-		if (xhr.status === 200) {
-		    location_ev =xhr.response[0].location;
-            
-			if(location_ev){
-			    $("#location_ev").val(location_ev);
-				
-			  }else{
-				  
-				  $("#location_ev").val("");
-			  }}
-
-})
-xhr.send();}
 
 
 alert_not_evaluation = (msg)=>{
@@ -150,26 +141,6 @@ disabledAlertEv= () =>{
     $("#title_alert_ev").css("display","none");
 }
 
-
-getLocation=(id)=>{
-	let xhr = new XMLHttpRequest();
-	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
-	xhr.responseType = "json";
-	xhr.addEventListener("load", () => {
-		if (xhr.status === 200) {
-		    location_ev =xhr.response[0].location;
-            
-			if(location_ev){
-			    $("#location_ev").val(location_ev);
-				
-			  }else{
-				  
-				  $("#location_ev").val("");
-			  }}
-
-})
-
-xhr.send();}
 
 
 
@@ -249,13 +220,14 @@ edit_evaluation = () => {
 					date_create:$("#date_create_ev").val(),
 					date_modify:$("#date_modify_ev").val(),
 					date_approve:$("#date_approve_ev").val(),
-					location:0,
+					location: $("#location_ev").val(),
 					priority:$("#priority_ev").val(),
 					check_admin_old:check_admin_old_ev,
 					check_technical_old:check_technical_old_ev,
+					userAdmin: 0
 					
 				};
-				
+				console.log(data);
 				 
 						Object.keys(data).map((d) => $(`.${d}`).hide());
 						$.ajax({

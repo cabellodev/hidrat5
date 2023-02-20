@@ -12,7 +12,16 @@ class ReparationModel extends CI_Model {
         LEFT JOIN ot ON ot.id = r.ot_id
         WHERE r.ot_id = ? ";
         if($reparation = $this->db->query($query, array($ot_id))->result_array()) return $reparation; else return false;
-    } 
+    }
+    
+    public function getSubstacksByOrder($ot_id){
+        $query = "SELECT sr.id, sr.state, sr.ot_id number_ot, sr.date_assigment date, sr.check_tm, sr.check_at, u.full_name technical_assistant, s.name substask
+        FROM subtask_reparation sr
+        JOIN user u ON sr.user_id = u.id
+        JOIN subtask s ON sr.subtask_id = s.id
+        WHERE sr.ot_id = ?"; 
+        return $this->db->query($query,array($ot_id))->result();    
+    }
 
     public function getTechnicals()
     {

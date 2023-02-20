@@ -19,8 +19,52 @@ class EvaluationModel extends CI_Model {
         return $this->db->query($query, array($id,true))->result(); 
     }
 
+    public function getLocationByOrder($id){
+        
+        
+        $query= "SELECT ots.location_id FROM ot_location ots  WHERE ots.id = (
+        
+                        SELECT MAX(otl.id)
+                        FROM ot_location otl 
+                        WHERE otl.ot_id = ?
+                    )"
+                ;
+        
+        return $this->db->query($query, $id )->result(); 
+    }
+
+
+    public function getSubstacksByOrder($id){
+        $query = "SELECT se.id, se.state, se.ot_id number_ot, se.date_assigment date, se.check_tm, se.check_at, u.full_name technical_assistant, s.name substask
+        FROM subtask_evaluation se
+        JOIN user u ON se.user_id = u.id
+        JOIN subtask s ON se.subtask_id = s.id
+        WHERE se.ot_id = ?"; 
+        return $this->db->query($query,array($id))->result();  
+    }
+
+    public function getSubstaksReparation($id){
+        $query = "SELECT sr.id, sr.state, sr.ot_id number_ot, sr.date_assigment date, sr.check_tm, sr.check_at, u.full_name technical_assistant, s.name substask
+        FROM subtask_reparation sr
+        JOIN user u ON sr.user_id = u.id
+        JOIN subtask s ON sr.subtask_id = s.id
+        WHERE sr.ot_id = ?"; 
+        return $this->db->query($query,array($id))->result();  
+    } 
+
 
     public function editEvaluation($id,$data){
+
+        if($data['userAdmin'] == 0){
+            $location = $data['location'];
+            $datos_ot_location = array(
+                'ot_id' => $id,
+                'location_id' => $location,
+                'user_id' => $this->session->userdata('id')
+            );
+    
+            $this->db->insert('ot_location', $datos_ot_location);
+        }        
 
         $user= $_SESSION['full_name'];
         date_default_timezone_set("America/Santiago");
@@ -102,7 +146,7 @@ class EvaluationModel extends CI_Model {
             )
         );
 
-       
+        
 
             $query = "UPDATE evaluation SET details = ? , user_assignment = ? , user_interaction = ? , priority = ? , date_priority = ? WHERE ot_id = ?";
             return $this->db->query($query, array($details,$technical,$user_interaction,$priority,$date_priority,$id)); 

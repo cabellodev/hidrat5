@@ -1,6 +1,20 @@
 $(() => {
     get_data_technical_report();
 });
+
+function autoresize(textarea) {
+    textarea.style.height = '0px';     //Reset height, so that it not only grows but also shrinks
+    textarea.style.height = (textarea.scrollHeight+10) + 'px';    //Set new height
+}
+
+$("#tr_recommendation").keyup(function () {
+    autoresize(this);
+});
+
+$("#tr_conclusion").keyup(function () {
+    autoresize(this);
+});
+
 let cont = 0;
 let tr_id_images = [];
 let tr_file_images = [];
@@ -119,7 +133,7 @@ get_data_technical_report = () =>{
                 technical_report_images = JSON.parse(data_images);
                 if(tr_id_images.length == 0){
                     $.each(technical_report_images, function(i, item) {
-                        let image = "<div id='tr_div_details_image_"+item.id+"'><div class='row mb-2'><div class='col-md-5 mb-3'><label id='tr_label_image_"+item.id+"'>Imagen</label><button id='tr_btn_image_"+item.id+"' onclick='loadImages("+item.id+")' class='btn btn-primary' style='margin-right: 5px; margin-bottom: 5px; display:none;'><i class='fas fa-plus'></i>Seleccione imagen</button><div class='input-group'><img style='display:block;margin:auto;' width='400' heigth='400' id='tr_image_file_"+item.id+"' src='http://localhost/hidrat5/assets/upload/"+item.image+"' width='100%' class='responsive'></div></div>"
+                        let image = "<div id='tr_div_details_image_"+item.id+"'><div class='row mb-2'><div class='col-md-5 mb-3'><label id='tr_label_image_"+item.id+"'>Imagen</label><button id='tr_btn_image_"+item.id+"' onclick='loadImages("+item.id+")' class='btn btn-primary' style='margin-right: 5px; margin-bottom: 5px; display:none;'><i class='fas fa-plus'></i>Seleccione imagen</button><div class='input-group'><img class='img-fluid' style='display:block;margin:auto;' width='400' heigth='400' id='tr_image_file_"+item.id+"' src='http://localhost/hidrat5/assets/upload/"+item.image+"' width='100%' class='responsive'></div></div>"
                         let minus = "<div class='col-md-7 mb-3'><div name='tr_delete_' id='tr_delete_"+item.id+"' style='text-align: right; display:none;'><button class='btn btn-danger rounded-circle' id='tr_btn_delete_"+item.id+"' onclick='deleteFields("+item.id+")'><i class='fas fa-minus'></i></button></div>"
                         let name = "<div><label>Nombre</label><div class='input-group'><input value='"+item.name+"' type='text' class='form-control' id='tr_image_name_"+item.id+"' readonly></div></div>"
                         let description = "<div style='padding-top: 15px;'><label>Descripción</label><div class='input-group'><textarea type='text' rows='6' class='form-control' id='tr_image_description_"+item.id+"' readonly>"+item.description+"</textarea></div></div></div></div><hr></div>"
@@ -131,6 +145,9 @@ get_data_technical_report = () =>{
                 }
             }
             tr_enableFields(tr_check_technical_old, aux, time_init, time_end);
+            $("textarea").each(function () {
+                this.style.height = (this.scrollHeight+10)+'px';
+            });
 		}else { 
             swal({
 				title: "Error",
@@ -214,7 +231,7 @@ createFields = () =>{
         cont =1;
     }
     
-    let image = "<div id='tr_div_details_image_"+cont+"'><div class='row mb-2'><div class='col-md-5 mb-3'><button id='tr_btn_image_"+cont+"' onclick='loadImages("+cont+")' class='btn btn-primary' style='margin-right: 5px; margin-bottom: 5px;'><i class='fas fa-plus'></i>Seleccione imagen</button><div class='input-group'><img style='display:block;margin:auto;' width='400' heigth='400' src='' id='tr_image_file_"+cont+"' width='100%' class='responsive'></div></div>"
+    let image = "<div id='tr_div_details_image_"+cont+"'><div class='row mb-2'><div class='col-md-5 mb-3'><button id='tr_btn_image_"+cont+"' onclick='loadImages("+cont+")' class='btn btn-primary' style='margin-right: 5px; margin-bottom: 5px;'><i class='fas fa-plus'></i>Seleccione imagen</button><div class='input-group'><img class='img-fluid' style='display:block;margin:auto;' width='400' heigth='400' src='' id='tr_image_file_"+cont+"' width='100%' class='responsive'></div></div>"
     let minus = "<div class='col-md-7 mb-3'><div name='tr_delete_' id='tr_delete_"+cont+"' style='text-align: right;'><button class='btn btn-danger rounded-circle' id='tr_btn_delete_"+cont+"' onclick='deleteFields("+cont+")'><i class='fas fa-minus'></i></button></div>"
     let name = "<div><label>Nombre</label><div class='input-group'><input type='text' class='form-control' id='tr_image_name_"+cont+"' ></div></div>"
     let description = "<div style='padding-top: 15px;'><label>Descripción</label><div class='input-group'><textarea type='text' rows='6' class='form-control' id='tr_image_description_"+cont+"'></textarea></div></div></div></div><hr></div>"

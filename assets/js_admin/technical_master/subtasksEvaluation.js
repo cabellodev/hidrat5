@@ -57,12 +57,16 @@ getSubstaks = () => {
             let technicalAssistantData = data[1];
             let substaksData = data[2];
             let state = data[3];
-            let detalles_Ev = JSON.parse(state[0]['ev_details']);
+            let detalles_Ev;
             let aux = [];
-            console.log(detalles_Ev);
-            let stateRep = detalles_Ev.approve_technical;
-            console.log(stateRep);
+            let stateRep;
+
+               
             if(substaksReparation){
+                detalles_Ev = JSON.parse(state[0]['ev_details']);
+                if(detalles_Ev){
+                    stateRep = detalles_Ev.approve_technical;
+                }
                 substaksReparation.forEach((item)=>{
                     let check_tm;
                     let check_at;
