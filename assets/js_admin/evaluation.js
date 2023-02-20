@@ -4,14 +4,36 @@ $(() => {
     get_data_evaluation();
 	get_all_notifications(); 
 	get_data_evaluation_subtareas();
-   
+	get_admin_user();
+
 });
+
+
 let check_admin_old_ev = false;
 let check_technical_old_ev = false;
 let technicals_user = 0; 
 let list_technical_notification = [];
+let transmitter= ""; // el que envia el mensaje
 
+get_admin_user=()=>{
 
+	$.ajax({
+		type: "GET",
+		url: host_url + `api/notifications/user/admin`,
+		crossOrigin: false,
+		async:false,
+		dataType: "json",
+		success: (result) => {
+		console.log(result);
+        transmitter =  result.msg;
+	
+		},
+		error:()=>{
+            
+		}
+		
+	});
+}
 
 
 get_data_evaluation = () =>{
@@ -309,8 +331,6 @@ edit_evaluation = () => {
 		userAdmin:1,
 	};
 
-   console.log(data);
-
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
 		data: {
@@ -332,8 +352,11 @@ edit_evaluation = () => {
 				get_data_evaluation();
 				get_all_notifications(); 
 			   });
-
-			notification_technical(data.technical,1); // tecnico y reporte numero 1 = evaluacion
+			   if(!data.approve_admin){
+				notification_technical(data.technical,1);
+				}else{
+				   console.log("no es posible enviar otra notificacion");
+			    }	 
 		},
 		error: (result) => {
             swal({
@@ -348,7 +371,7 @@ edit_evaluation = () => {
 	});
 
 
-	
+
 };
 
 $("#ev_popover").on("click",function(){
@@ -446,7 +469,6 @@ report_evaluation = ()=>{
     url = host_url + file;
     window.open(url);
 }
-
 // NOTIFICATION TO TECHNICAL MASTERS CODE (EVALUATIONS) ////////////////////////////////////////////
 
 get_all_notifications = ()=>{  // todas las notificaciones de technicos 
@@ -499,7 +521,8 @@ notification_technical = (user,report)=>{ // crear notificaciones
 		  object = { message:message_hab,
 			         date:moment().format(),
 					 ot:ot,
-					 state:true}
+					 state:true,
+					 transmitter:transmitter}
 
 		  aux.push(object);
           data={user:user,messages:JSON.stringify(aux)}; 
@@ -534,7 +557,8 @@ notification_technical = (user,report)=>{ // crear notificaciones
 					object={message:message_hab,
 						date:moment().format(),
 						ot:ot,
-						state:true}
+						state:true,
+						transmitter:transmitter,}
 
 					aux.push(object);
 					data ={user:user,messages:JSON.stringify(aux)};
@@ -558,7 +582,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 		if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
            
 			aux = [];
-			object= { message:message_hab,date:moment().format(),ot:ot,state:true}
+			object= { message:message_hab,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
 			aux.push(object);
 			data={user:user,messages:JSON.stringify(aux)}; 
 			
@@ -590,7 +614,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 										
 										user_exist=true;
 										aux = JSON.parse(x.messages);
-										object= { message:message_des,date:moment().format(),ot:ot,state:true}
+										object= { message:message_des,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
 										aux.push(object);
 										
 										data ={user:technicals_user,messages:JSON.stringify(aux)};
@@ -612,7 +636,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 					if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
 						
 						aux = [];
-						object = { message:message_des,date:moment().format(),ot:ot,state:true}
+						object = { message:message_des,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
 						aux.push(object);
 						data={user:technicals_user,messages:JSON.stringify(aux)}; 
 						
@@ -635,7 +659,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 } // fin de la funcion de notificaciones de asignaciones 
 
 notification_manual = () => {
-
+   
    let message = $("#notification_manual").val();
    let user = $("#technical_ev").val();
    let ot= $("#id_ot").val();
@@ -645,7 +669,7 @@ notification_manual = () => {
 	if(list_technical_notification.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
 	   
 		aux = [];
-		object = { message:message,date:moment().format(),ot:ot,state:true}
+		object = { message:message,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
 		aux.push(object);
 		data={user:user,messages:JSON.stringify(aux)}; 
 		
@@ -679,7 +703,7 @@ notification_manual = () => {
 			  if(x.user == user){ 
 				  user_exist=true;
 				  aux = JSON.parse(x.messages);
-				  object = { message:message,date:moment().format(),ot:ot,state:true}
+				  object = { message:message,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
 				  aux.push(object);
 				  data ={user:user,messages:JSON.stringify(aux)};
 					 $.ajax({
@@ -732,13 +756,6 @@ $("#btn_edit").on("click", () => {
 //$("#btn_export_ev").on("click",showExportEvaluation );
 $("#btn_export_ev").on("click",report_evaluation);
 $("#hab_edit_ev").on("click", ev_enableFields);
-
-
-
-
-
-
-
 
 
 

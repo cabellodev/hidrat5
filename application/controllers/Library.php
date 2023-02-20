@@ -268,7 +268,6 @@ class Library extends CI_Controller
 
 public function access_user(){
 
-  
         if ($this->accesscontrol->checkAuth()['correct']) {
             $this->load->model('LibraryModel');
             if($res=$this->LibraryModel->access_user()) { 

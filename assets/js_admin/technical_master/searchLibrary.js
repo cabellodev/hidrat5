@@ -5,7 +5,7 @@ $(()=>{
     get_books();
     access_validation();
 
-})
+});
 
 let books = [];
 let tags_search= [];
@@ -124,7 +124,7 @@ get_books_selection =()=>{
 
            }
     })
-    console.log(books_selector);
+   
     if(books_selector.length == 0){
         swal({
             title: "Sin resultados",

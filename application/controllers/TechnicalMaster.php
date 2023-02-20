@@ -4,13 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class TechnicalMaster extends CI_Controller
 {
 
-    public function __construct(){
-		parent:: __construct(); 
-		$this->load->model('TechnicalMasterModel');
-        $this->load->helper('substask_rules');
-	}
-
-
+    
     public function counterMaster ()
     { 
         
@@ -22,7 +16,11 @@ class TechnicalMaster extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }
-
+    public function __construct(){
+		parent:: __construct(); 
+		$this->load->model('TechnicalMasterModel');
+        $this->load->helper('substask_rules');
+	}
 
     public function  stagesOrderTechnicals()
     { 
@@ -56,7 +54,7 @@ class TechnicalMaster extends CI_Controller
     }
 
 
-   
+
 
     public function adminHydraulicTest()
     {     

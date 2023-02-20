@@ -160,6 +160,7 @@ draw_notification=(data,new_message,user_notification)=>{
  console.log(count_news);
  console.log(count_old);
 
+
  if(count_news > count_old){console.log("entre a sonido"); sound(); count_old = count_news;}else if(count_news < count_old){ count_old = count_news; }
 
     if(count_news == 0){$('#icon-comment').css('color', 'white');}else{ $('#icon-comment').css('color', '#8FF103'); }

@@ -195,7 +195,6 @@
     </div>
   </div>
 </div>
-
-<script src="<?php echo base_url(); ?>assets/js_admin/evaluation.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/evaluation.js?v=<?php echo(rand()); ?>"></script>
   
 

@@ -178,6 +178,46 @@
   </div>
 </div>
 
+<div class="modal fade" id="modal_close_ot" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cierre de OT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    
+      <div class="modal-body">
+                <form>
+                    
+                    <div class="form-group" id="frm_range">
+                        <label>Motivo de cierre</label>
+                        <select class="form-select form-control" id="reason_close" name="range" >
+                            <option value="1">Facturación</option>
+                            <option value="2">Devolución</option>
+                            <option value="3">Otro</option>
+
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="form-group" id="billing" >
+                        <label>Número de factura</label>
+                        <input type="text" class="form-control" id="billing_number" name="billing_number" placeholder="Número de facturación">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    
+                    <div class="form-group float-right">
+                        <button onclick="close_modal_user()" type="button" class="btn btn-secondary btn-danger">Cerrar</button>
+                        <button id="btn_save_close" type="button" class="btn btn-primary btn-success">Guardar</button>
+                    </div>
+                </form>
+                </div>
+    </div>
+  </div>
+</div>
+
 <script src="<?php echo base_url(); ?>assets/vendor/fuzzy/fuzzy-autocomplete.js"></script>
 <script src="<?php echo base_url(); ?>assets/js_admin/stagesOrder.js"></script>
 <script src="<?php echo base_url(); ?>assets/js_admin/export.js"></script>

@@ -177,12 +177,14 @@ create_edit_user = () =>{
     let library = $("#library_active").is(':checked');
     let state = ($("#state").val() == "Activo" ? 1 : 0);
     
-    library ? active=1 : active =0;  //library active 
-     
+    library ? active=1 : active =0; 
+
     if(edit){
+     
      url = "api/update_user";
      data = {rut: rut, full_name: full_name, email:email, range:range, state: state, rut_old: rutEdit, email_old: emailEdit,library_active:active};
     }else{
+      
      url = "api/create_user";
      data = {rut: rut, full_name: full_name, passwd:passwd,  email:email, range:range, state: 1,library_active:active};
     } 
@@ -282,12 +284,13 @@ des_hab_user= (rut, state) => {
 
 /*Función para preparar la información a editar*/
 show_info_update_user = (data) =>{
-    if(data.library_active==0){
+    if(data.library_active ==0){
+
+        console.log(data.library_active);
         $("#library_active").prop('checked',false);
     }else{
         $("#library_active").prop('checked',true);
     }
-    
     edit = true;
     rutEdit = data.rut;
     emailEdit = data.email;
@@ -356,12 +359,14 @@ addErrorStyle = errores => {
 
 /*Función para cerrar y limpiar el modal utilizado para crear y editar usuario*/
 close_modal_user = () =>{
+    
     $("#rut").val("");
     $("#passwd").val("");
     $("#full_name").val("");
     $("#email").val("");
     $("#range").val("");
     $("#frm_state").hide();
+    $("#library_active").prop('checked',false);
     $("#frm_rut > input").removeClass("is-invalid");
     $("#frm_passwd > input").removeClass("is-invalid");
     $("#frm_full_name > input").removeClass("is-invalid");

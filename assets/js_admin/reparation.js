@@ -9,8 +9,6 @@ let r_check_adm_old = '';
 let list_technical_notification_rep=[];
 let technicals_user_rep = 0;
 
-
-
 get_data_reparation = () =>{
     id= $("#ot_number").val();
 	let xhr = new XMLHttpRequest();
@@ -46,7 +44,6 @@ get_data_reparation = () =>{
             if(xhr.response[0][0].user){
                 $("#r_technical").val(xhr.response[0][0].user);
                 technicals_user_rep = xhr.response[0][0].user;
-
             }else{
                 $("#r_technical").val('');
             }
@@ -322,8 +319,6 @@ saveReparation = () =>{
                 user_approve: user_approve,
                 technical_assignment: $('#r_technical option:selected').text(),
             } 
-            console.log(data.technical_assignment);
-            console.log(data.user_assignment);
         
             $.ajax({
                 type: "POST",
@@ -343,8 +338,11 @@ saveReparation = () =>{
                     get_data_reparation();
                     get_all_notifications_rep();
                  });
-
-                 notification_technical_rep(data.user_assignment,3);
+                 if(!data.check_adm){
+                    notification_technical_rep(data.user_assignment,3);
+                    }else{
+                       console.log("no es posible enviar otra notificacion");
+                    }
                 }, 
                 statusCode: {
                  405: (xhr) =>{
@@ -391,8 +389,6 @@ saveReparation = () =>{
             user_approve: user_approve,
             technical_assignment: $('#r_technical option:selected').text(),
         } 
-        console.log(data.technical_assignment);
-        console.log(data.user_assignment);
         $.ajax({
             type: "POST",
             url: host_url + "api/editReparation",
@@ -411,7 +407,11 @@ saveReparation = () =>{
                 get_data_reparation();
                 get_all_notifications_rep();
              });
-             notification_technical_rep(data.user_assignment,3);
+             if(data.check_adm !=1){
+                notification_technical_rep(data.user_assignment,3);
+                }else{
+                   console.log("no es posible enviar otra notificacion");
+                }
             }, 
             statusCode: {
              405: (xhr) =>{
@@ -475,6 +475,7 @@ get_all_notifications_rep = ()=>{  // todas las notificaciones de technicos
 
 
 notification_technical_rep = (user,report)=>{ // crear notificaciones  
+    console.log(list_technical_notification_rep);
   
 	ot=  $("#ot_number").val();
 	message_hab="";
@@ -502,11 +503,12 @@ notification_technical_rep = (user,report)=>{ // crear notificaciones
 		  object = { message:message_hab,
 			         date:moment().format(),
 					 ot:ot,
-					 state:true}
+					 state:true,
+                     transmitter:transmitter}
 
 		  aux.push(object);
           data={user:user,messages:JSON.stringify(aux)}; 
-		  console.log(data);
+		
 
 		  $.ajax({
 			data: {
@@ -533,7 +535,8 @@ notification_technical_rep = (user,report)=>{ // crear notificaciones
 					object={message:message_hab,
 						date:moment().format(),
 						ot:ot,
-						state:true}
+						state:true,
+                        transmitter:transmitter}
 
 					aux.push(object);
 					data ={user:user,messages:JSON.stringify(aux)};
@@ -555,7 +558,8 @@ notification_technical_rep = (user,report)=>{ // crear notificaciones
 		if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
 
 			aux = [];
-			object= { message:message_hab,date:moment().format(),ot:ot,state:true}
+			object= { message:message_hab,date:moment().format(),ot:ot,state:true,
+                transmitter:transmitter}
 			aux.push(object);
 			data={user:user,messages:JSON.stringify(aux)}; 
 			
@@ -585,7 +589,8 @@ notification_technical_rep = (user,report)=>{ // crear notificaciones
 									if(x.user == technicals_user_rep){ 
 										user_exist=true;
 										aux = JSON.parse(x.messages);
-										object= { message:message_des,date:moment().format(),ot:ot,state:true}
+										object= { message:message_des,date:moment().format(),ot:ot,state:true,
+                                            transmitter:transmitter}
 										aux.push(object);
 										console.log(aux);
 										data ={user:technicals_user_rep,messages:JSON.stringify(aux)};
@@ -607,7 +612,8 @@ notification_technical_rep = (user,report)=>{ // crear notificaciones
 					if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
 
 						aux = [];
-						object = { message:message_des,date:moment().format(),ot:ot,state:true}
+						object = { message:message_des,date:moment().format(),ot:ot,state:true,
+                            transmitter:transmitter}
 						aux.push(object);
 						data={user:technicals_user_rep,messages:JSON.stringify(aux)}; 
 						
@@ -638,7 +644,8 @@ notification_manual_rep= () => {
 	if(list_technical_notification_rep.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
 	   
 		aux = [];
-		object = { message:message,date:moment().format(),ot:ot,state:true}
+		object = { message:message,date:moment().format(),ot:ot,state:true,
+            transmitter:transmitter}
 		aux.push(object);
 		data={user:user,messages:JSON.stringify(aux)}; 
 		
@@ -672,7 +679,8 @@ notification_manual_rep= () => {
 			  if(x.user == user){ 
 				  user_exist=true;
 				  aux = JSON.parse(x.messages);
-				  object = { message:message,date:moment().format(),ot:ot,state:true}
+				  object = { message:message,date:moment().format(),ot:ot,state:true,
+                    transmitter:transmitter}
 				  aux.push(object);
 				  data ={user:user,messages:JSON.stringify(aux)};
 					 $.ajax({
@@ -706,7 +714,6 @@ $("#send_notification_rep").on("click",()=>{
 });
 $("#send_technical_rep").on("click",notification_manual_rep);  
 //notifications
-
 $("#r_btnEdit").on("click", r_enableFields);
 
 $("#r_btnSave").on("click", saveReparation);
