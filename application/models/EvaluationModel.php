@@ -22,7 +22,11 @@ class EvaluationModel extends CI_Model {
     public function getLocationByOrder($id){
         
         
-        $query= "SELECT ots.location_id FROM ot_location ots  WHERE ots.id = (
+        $query= "SELECT ots.location_id , l.name name_location  
+                 FROM ot_location ots
+                 JOIN locations l ON ots.location_id = l.id
+        
+          WHERE ots.id = (
         
                         SELECT MAX(otl.id)
                         FROM ot_location otl 
@@ -55,8 +59,17 @@ class EvaluationModel extends CI_Model {
 
     public function editEvaluation($id,$data){
 
+        
+         $location = 0;
         if($data['userAdmin'] == 0){
-            $location = $data['location'];
+
+            if($data['location']==""){
+                $location = 1;
+            }else{
+                $location = $data['location'];
+            }
+            
+            
             $datos_ot_location = array(
                 'ot_id' => $id,
                 'location_id' => $location,
@@ -85,7 +98,7 @@ class EvaluationModel extends CI_Model {
             $user_approve= $user;
            
         }
-        $technical = null;
+        $technical = $this->session->userdata('id');
         if($data['technical']){
             $technical = $data['technical'];
             $date_priority=  date('Y-m-d G:i:s');

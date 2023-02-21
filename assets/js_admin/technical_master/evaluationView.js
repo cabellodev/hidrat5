@@ -9,22 +9,24 @@ let technicals_user = 0;
 get_data_evaluation = () =>{
 
     id= $("#ot_number").val();
+	console.log(id);
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-			
-			let data = xhr.response[0].details;
-			let technical=xhr.response[0].full_name;
-		    let data2 =xhr.response[0].user_interaction;
-			let location=xhr.response[0].location;
-			let problem=xhr.response[0].problem;
-			let file=xhr.response[0].export;
+		    console.log(xhr.response);
+			let data = xhr.response[0][0].details;
+			let technical=xhr.response[0][0].full_name;
+		    let data2 =xhr.response[0][0].user_interaction;
+			let location=xhr.response[1][0].name_location;//nombre de la ubicación
+			let problem=xhr.response[0][0].problem;
+			let file=xhr.response[0][0].export;
 
-        
+        console.log(data);
 		
 			if(data){
+			
 				let evaluation= JSON.parse(data);
 
 				if(evaluation.approve_admin === "true"){$( "#approve_admin_ev" ).prop('checked', true);
@@ -44,6 +46,7 @@ get_data_evaluation = () =>{
                 
 				$( "#date_evaluation").val(evaluation.date_evaluation);
 				$( "#description_ev").val(evaluation.description);
+				$( "#ev_location").val(location);
 				$( "#problem").val(problem);
 				$( "#notes" ).val(evaluation.notes);
 				$("#record_path_pdf").val(file);
@@ -51,6 +54,8 @@ get_data_evaluation = () =>{
 				
 				
 			}else{
+
+				
 				$( "#date_evaluation" ).val('');
 				$( "#description_ev" ).val('');
 				$( "#problem" ).val(problem);

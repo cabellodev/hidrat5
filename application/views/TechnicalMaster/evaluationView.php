@@ -59,17 +59,26 @@
                       <div class="invalid-feedback"></div>
                   </div>
               </div>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-4 mb-3">
+                  <label for="actividad">Ubicación</label>
+                  <div class="input-group" id='frm_date_admission'>
+                      <input type="text" class="form-control"style="background:white"  name="ev_location" id="ev_location" disabled>
+                      <div class="invalid-feedback"></div>
+                  </div>
+              </div>
+             
+              
+          </div>
+          <div class="row mb-2">
+
+              <div class="col-md-12 mb-3">
                   <label for="actividad">Problema</label>
                   <div class="input-group" id='frm_date_admission'>
                       <input type="text" class="form-control"style="background:white"  name="problem" id="problem" disabled>
                       <div class="invalid-feedback"></div>
                   </div>
               </div>
-              
-          </div>
-          <div class="row mb-2">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-12 mb-3">
                   <label for="actividad">Descripción</label>
                     <div class="input-group">
                       <textarea type="text" class="form-control" style="background:white" rows="2" name="description_ev" id="description_ev" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
@@ -78,7 +87,7 @@
                         </div>
                       </div>
               </div>  
-              <div class="col-md-6 mb-3">
+              <div class="col-md-12 mb-3">
                   <label for="actividad">Notas</label>
                     <div class="input-group">
                       <textarea type="text" class="form-control" style="background:white" rows="2" name="notes" id="notes" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>

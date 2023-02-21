@@ -1,5 +1,5 @@
 
-    <input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
+<input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
     <input type="hidden" class="form-control" id="id_ot" name="id_ot" value='<?= $id ?>' >
     <div id="content-wrapper">
     <div class="container-fluid mb-5" id="adminColors">
@@ -62,7 +62,7 @@
                   </div>
               </div>
               <div class="col-md-4 mb-3">
-                  <label>Ubicacion</label>
+                  <label>Ubicación</label>
                   <select class="custom-select d-block w-100" id="location_ev" name="location_ev" disabled>
                       <option></option>
                   </select>
@@ -116,4 +116,3 @@
 
     <script src="<?php echo base_url(); ?>assets/js_admin/technical_master/evaluationForm.js"></script>
   
-
