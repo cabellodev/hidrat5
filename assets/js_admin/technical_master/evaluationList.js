@@ -10,7 +10,6 @@ $(document).on({
 
 $(() => {
     get_orders_ev();
-
 });
 
 
@@ -23,6 +22,7 @@ get_orders_ev = () => {
             let data =xhr.response;
          
             $global=[];
+            console.log(data);
             data.forEach((item)=>{
              validation = JSON.parse(item.details);
              interaction = JSON.parse(item.user_interaction);
@@ -94,7 +94,7 @@ const tabla = $('#table_ev').DataTable({
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
     columnDefs: [
-        {className: "text-center", "targets": [6,7,8,9]},
+        {className: "text-center", "targets": [6,7,8]},
         {
 			"targets": [ 1 ],
 			"visible": false,
