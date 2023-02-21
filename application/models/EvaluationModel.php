@@ -83,7 +83,6 @@ class EvaluationModel extends CI_Model {
       
             $date_approve= $date;
             $user_approve= $user;
-           
         }
         $technical = null;
         if($data['technical']){

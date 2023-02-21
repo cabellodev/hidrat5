@@ -59,7 +59,7 @@ class TechnicalMasterModel extends CI_Model
     
 
         $query = "SELECT tr.ot_id number_ot,e.name enterprise, ot.priority ,tr.user_interaction , tr.details details,
-         ot.type_service service, tr.time_init, tr.aux, tr.time_end,ot.description
+         ot.type_service service, tr.time_init, tr.aux, tr.time_end,ot.description, tr.date_priority
 
         FROM technical_report tr 
         JOIN ot ON tr.ot_id = ot.id
@@ -182,7 +182,7 @@ class TechnicalMasterModel extends CI_Model
 
         $query = "SELECT ot.id number_ot,ot.problem, ot.date_admission date, 
         ot.description description, ot.type_service service, e.name enterprise,
-         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state ,ev.time_init, ev.aux, ev.time_end, ev.priority
+         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state ,ev.time_init, ev.aux, ev.time_end, ev.date_priority
         FROM ot
         JOIN enterprise e ON ot.enterprise_id = e.id
         JOIN component c ON ot.component_id = c.id

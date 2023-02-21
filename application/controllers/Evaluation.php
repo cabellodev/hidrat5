@@ -36,6 +36,7 @@ class Evaluation extends CI_Controller
 
         if($this->accesscontrol->checkAuth()['correct']) {
         $data = $this->input->post('data');
+
         $date_evaluation = $data['date_evaluation'];
         $description = $data['description'];
         $notes = $data['notes'];
