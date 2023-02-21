@@ -178,6 +178,7 @@ class TechnicalMaster extends CI_Controller
             $id = $params['ot'];
             $this->load->view('shared/headerTechnicalMaster');
             $this->load->view('TechnicalMaster/evaluation.php',array ('id'=> $id));
+            $this->load->view('shared/footer');
         }else {
             redirect('Home/login', 'refresh');
         }
@@ -229,6 +230,7 @@ class TechnicalMaster extends CI_Controller
             $id = $params['ot'];
             $this->load->view('shared/headerTechnicalMaster');
             $this->load->view('TechnicalMaster/evaluationView.php',array ('id'=> $id));
+            $this->load->view('shared/footer');
         }else {
             redirect('Home/login', 'refresh');
         }

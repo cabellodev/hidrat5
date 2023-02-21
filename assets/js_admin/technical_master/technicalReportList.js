@@ -129,7 +129,7 @@ const tabla = $('#tableTechnicalReports').DataTable({
 
 	columns: [
         { data: "number_ot"}, 
-        {data:"date_priority"},
+        {defaultContent:"1"},
         { data: "date" },
         {data:"enterprise"},
 		{data:"description"},
