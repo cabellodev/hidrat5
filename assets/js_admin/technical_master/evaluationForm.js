@@ -35,6 +35,8 @@ get_data_evaluation = () =>{
 			let priority=xhr.response[0][0].priority;
 		    location_ev =xhr.response[1][0].location_id;
             
+			console.log(xhr.response);
+
 			let file=xhr.response[0][0].export;
        
 		
@@ -106,15 +108,7 @@ get_data_evaluation = () =>{
 				$("#location_ev").val("");
 			}
 			
-
-			if(technical){
-				let a = $(`option[name ="${technical}"]`).val();
-				$("#technical_ev").val(a);
-			}else{
-				$("#technical_ev").val('');
-			}
-			technicals_user = xhr.response[0].user_assignment;
-			console.log(technical);
+			technicals_user = xhr.response[0][0].user_assignment;
 		    $("#technical_id").val(technicals_user);
             
 			disabledAlertEv();
