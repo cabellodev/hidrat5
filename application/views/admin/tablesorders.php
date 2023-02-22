@@ -44,6 +44,7 @@
 
         <div class="table-responsive tab-pane fade" id="reparation">
             <?php require('reparationEdit.php'); ?> 
+            </div>
         </div>
 
         <div class="table-responsive tab-pane fade" id="historyStates">

@@ -19,7 +19,7 @@ $("#notes").keyup(function () {
 let check_admin_old_ev = false;
 let check_technical_old_ev = false;
 let technicals_user = 0; 
-let location_ev= 0 ;
+
 
 get_data_evaluation = () =>{
     id= $("#ot_number").val();
@@ -33,7 +33,7 @@ get_data_evaluation = () =>{
 			let problem=xhr.response[0][0].problem;
 		    let data2 =xhr.response[0][0].user_interaction;
 			let priority=xhr.response[0][0].priority;
-		    location_ev =xhr.response[1][0].location_id;
+		    let location_ev =xhr.response[1][0].location_id;
             
 			console.log(xhr.response);
 

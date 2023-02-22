@@ -52,10 +52,21 @@ get_orders_ht = () => {
                 });
 
 
+                tabla.clear();
+                tabla.rows.add($global);
 
-            tabla.clear();
-			tabla.rows.add($global);	
-			tabla.order( [ 1, 'desc' ] ).draw();
+                let late_ht = localStorage.getItem('view_ht'); // true or false
+                let search_ht = localStorage.getItem('search_ht'); // number , null or ""
+                
+            
+                if(late_ht){
+                   tabla.order( [ 1 , 'desc' ] ).search(search_ht).draw();
+                   localStorage.setItem('view_ht',false);
+                   localStorage.setItem('search_ht',"");
+                    
+                }else{
+                    tabla.order( [ 1 , 'desc' ] ).search("").draw();
+                }
 		} else {
 			swal({
 				title: "Error",
