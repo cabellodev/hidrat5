@@ -36,10 +36,49 @@ const tabla_late = $("#table-late").DataTable({
                 </button>`
             }
         }},
-        { data: "number_ot" },
+        {   defaultContent: "oc",
+        "render": function (data, type, row){
+        
+           
+                return `<button type='button' class='btn btn-primary' name="btn-order">
+                  ${row.number_ot}
+                </button>`;
+            
+        }},
+       
         
 	],
 });
+
+
+$("#table-late").on("click", "button", function () {
+    let data = tabla_late.row($(this).parents("tr")).data();
+    if ($(this)[0].name == "btn-order") {
+        let ot = data.number_ot;
+        let url="";
+        if(data.report =="Test Hidráulico"){
+            localStorage.setItem("search_th",ot);
+            localStorage.setItem("view_th",true);
+            url = 'adminHydraulicTest';
+
+        }else if(data.report =="Reparación"){
+
+            localStorage.setItem("search_rep",ot);
+            localStorage.setItem("view_rep",true);
+            url = 'tmAdminReparation';
+
+        }else{
+
+            localStorage.setItem("search_ev",ot);
+            localStorage.setItem("view_ev",true);
+            url = 'adminEvaluation';
+        }
+       
+	  
+		window.location.assign(host_url+url);
+	}
+});
+
 
 
 datatable_late=(data)=>{
@@ -47,6 +86,8 @@ datatable_late=(data)=>{
 	tabla_late.rows.add(data);
 	tabla_late.draw();
 }
+
+
 
 get_notifications_late=()=>{ 
     $.ajax({

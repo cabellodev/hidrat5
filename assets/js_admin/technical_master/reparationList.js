@@ -60,7 +60,7 @@ getReparations = () => {
                     reparation = 
                     {
                         number_ot : item.number_ot,
-			    description:item.description,
+			             description:item.description,
                         date : item.date,
                         client: item.client,
                         component: item.component,
@@ -79,7 +79,21 @@ getReparations = () => {
             console.log(aux);
             tabla.clear();
             tabla.rows.add(aux);	
-            tabla.order( [ 7, 'asc' ] ).draw();      
+
+
+            let late_rep = localStorage.getItem('view_rep'); // true or false
+            let search_rep = localStorage.getItem('search_rep'); // number , null or ""
+            
+        
+            if(late_rep){
+               tabla.order( [ 7 , 'asc' ] ).search(search_rep).draw();
+               localStorage.setItem('view_rep',false);
+               localStorage.setItem('search_rep',"");
+                
+            }else{
+                tabla.order( [ 7 , 'asc' ] ).search("").draw();
+            }
+               
 		} else {
 			swal({
 				title: "Error",

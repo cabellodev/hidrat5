@@ -80,9 +80,20 @@ get_orders_ev = () => {
                 }
                 });
 
-            tabla.clear();
-			tabla.rows.add($global);	
-			tabla.order( [ 1 , 'desc' ] ).draw();
+                let late_evaluation = localStorage.getItem('view_ev'); // true or false
+                let search_evaluation = localStorage.getItem('search_ev'); // number , null or ""
+                
+                tabla.clear();
+                tabla.rows.add($global);
+    
+                if(late_evaluation){
+                   tabla.order( [ 1 , 'desc' ] ).search(search_evaluation).draw();
+                   localStorage.setItem('view_ev',false);
+                   localStorage.setItem('search_ev',"");
+                    
+                }else{
+                    tabla.order( [ 1 , 'desc' ] ).search("").draw();
+                }
 		} 
 	});
 	xhr.send();
