@@ -14,6 +14,8 @@ class NotificationsTechnicalModel extends CI_Model
 
     public function createNotification($data){
        
+
+       
         $sql = "SELECT * FROM notifications_technical WHERE user =? ";
         $result= $this->db->query($sql ,$data['user']);
 

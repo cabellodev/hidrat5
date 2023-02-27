@@ -20,10 +20,9 @@ get_orders_ht = () => {
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-            let data =xhr.response;
-         
-            $global=[];
-            data.forEach((item)=>{
+             let data =xhr.response;
+             $global=[];
+             data.forEach((item)=>{
              validation = JSON.parse(item.details);
              interaction = JSON.parse(item.user_interaction);
              config = JSON.parse(item.config);
@@ -46,9 +45,8 @@ get_orders_ht = () => {
                       time_end: item.time_end,
 
                   }
-                console.log(report.approve_technical);
                   
-                 $global.push(report);
+                    $global.push(report);
                 });
 
 
@@ -58,12 +56,10 @@ get_orders_ht = () => {
                 let late_ht = localStorage.getItem('view_ht'); // true or false
                 let search_ht = localStorage.getItem('search_ht'); // number , null or ""
                 
-            
                 if(late_ht){
                    tabla.order( [ 1 , 'desc' ] ).search(search_ht).draw();
                    localStorage.setItem('view_ht',false);
                    localStorage.setItem('search_ht',"");
-                    
                 }else{
                     tabla.order( [ 1 , 'desc' ] ).search("").draw();
                 }

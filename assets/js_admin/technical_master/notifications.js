@@ -153,7 +153,15 @@ const tabla_notification = $("#table-notifications").DataTable({
          },
         
         { data: "date" },
-        { data: "ot" },
+        {   defaultContent: "oc",
+        "render": function (data, type, row){
+        
+           
+                return `<button type='button' class='btn btn-primary' name="btn-order">
+                  ${row.ot}
+                </button>`;
+            
+        }},
         
         {   defaultContent: "oc",
         "render": function (data, type, row){
@@ -199,7 +207,39 @@ $("#table-notifications").on("click", "button", function () {
                 swal.close();
             }
         });
-	}
+	}else  if ($(this)[0].name == "btn-order") {
+        let ot = data.ot;
+        let url="";
+        if(data.report){
+            if(data.report ==4){
+                localStorage.setItem("search_th",ot);
+                localStorage.setItem("view_th",true);
+                url = 'adminHydraulicTest';
+
+            }else if(data.report ==3){
+
+                localStorage.setItem("search_rep",ot);
+                localStorage.setItem("view_rep",true);
+                url = 'tmAdminReparation';
+
+            }else if(data.report ==1){
+
+                localStorage.setItem("search_ev",ot);
+                localStorage.setItem("view_ev",true);
+                url = 'adminEvaluation';
+            }
+        
+        
+            window.location.assign(host_url+url);
+	}else{
+        swal({
+            title: "Sin redirección",
+            icon: "warning",
+            text: "Solo los mensajes recibidos desde el 22/02/2023 tienen redirección.(por nueva implementación) ",
+        });
+        
+    }
+}
     }
 );
 

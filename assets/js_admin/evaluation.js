@@ -497,6 +497,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 	ot= $("#id_ot").val();
 	message_hab="";
 	message_des="";
+	
 
     if(report==1){ // selecciona dependiendo del tipo de reporte
 		message_hab = `Se te ha asignado la Evaluación de la OT (${ot})`;
@@ -522,7 +523,9 @@ notification_technical = (user,report)=>{ // crear notificaciones
 			         date:moment().format(),
 					 ot:ot,
 					 state:true,
-					 transmitter:transmitter}
+					 transmitter:transmitter,
+					 report:report
+					}
 
 		  aux.push(object);
           data={user:user,messages:JSON.stringify(aux)}; 
@@ -558,7 +561,8 @@ notification_technical = (user,report)=>{ // crear notificaciones
 						date:moment().format(),
 						ot:ot,
 						state:true,
-						transmitter:transmitter,}
+						transmitter:transmitter,
+						report:report}
 
 					aux.push(object);
 					data ={user:user,messages:JSON.stringify(aux)};
@@ -582,7 +586,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 		if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
            
 			aux = [];
-			object= { message:message_hab,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
+			object= { message:message_hab,date:moment().format(),ot:ot,state:true,transmitter:transmitter,report:report}
 			aux.push(object);
 			data={user:user,messages:JSON.stringify(aux)}; 
 			
@@ -614,7 +618,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 										
 										user_exist=true;
 										aux = JSON.parse(x.messages);
-										object= { message:message_des,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
+										object= { message:message_des,date:moment().format(),ot:ot,state:true,transmitter:transmitter,report:report}
 										aux.push(object);
 										
 										data ={user:technicals_user,messages:JSON.stringify(aux)};
@@ -636,7 +640,7 @@ notification_technical = (user,report)=>{ // crear notificaciones
 					if(!user_exist){ // si existen usuarios , pero el usuario seleccionado no existe , se crea el usuario con el primer mensaje
 						
 						aux = [];
-						object = { message:message_des,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
+						object = { message:message_des,date:moment().format(),ot:ot,state:true,transmitter:transmitter,report:report}
 						aux.push(object);
 						data={user:technicals_user,messages:JSON.stringify(aux)}; 
 						
@@ -669,7 +673,7 @@ notification_manual = () => {
 	if(list_technical_notification.length == 0){ // si no hay usuarios en la tabla , se agrega el primer usuario
 	   
 		aux = [];
-		object = { message:message,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
+		object = { message:message,date:moment().format(),ot:ot,state:true,transmitter:transmitter,report:1}
 		aux.push(object);
 		data={user:user,messages:JSON.stringify(aux)}; 
 		
@@ -703,7 +707,7 @@ notification_manual = () => {
 			  if(x.user == user){ 
 				  user_exist=true;
 				  aux = JSON.parse(x.messages);
-				  object = { message:message,date:moment().format(),ot:ot,state:true,transmitter:transmitter}
+				  object = { message:message,date:moment().format(),ot:ot,state:true,transmitter:transmitter,report:1}
 				  aux.push(object);
 				  data ={user:user,messages:JSON.stringify(aux)};
 					 $.ajax({
