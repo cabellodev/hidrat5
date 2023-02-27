@@ -63,6 +63,7 @@ class Aprobation extends CI_Controller
         $data = $this->input->post('data');
        $ok=true;
         if($ok){ 
+            
             $this->load->model('AprobationModel');
             if($this->AprobationModel->updateNumberBilling($data)){
             $this->response->sendJSONResponse( array("msg"=>"Se ha editado con éxito "));

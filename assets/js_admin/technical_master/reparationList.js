@@ -81,6 +81,7 @@ getReparations = () => {
             tabla.rows.add(aux);	
 
 
+            
             let late_rep = localStorage.getItem('view_rep'); // true or false
             let search_rep = localStorage.getItem('search_rep'); // number , null or ""
             

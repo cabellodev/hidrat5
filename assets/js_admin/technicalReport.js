@@ -607,7 +607,8 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 			         date:moment().format(),
 					 ot:ot,
 					 state:true,
-                     transmitter:transmitter
+                     transmitter:transmitter,
+                     report:report
                     }
 
 		  aux.push(object);
@@ -640,7 +641,7 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 						date:moment().format(),
 						ot:ot,
 						state:true,
-                        transmitter:transmitter}
+                        transmitter:transmitter,report:report}
 
 					aux.push(object);
 					data ={user:user,messages:JSON.stringify(aux)};
@@ -663,7 +664,7 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 
 			aux = [];
 			object= { message:message_hab,date:moment().format(),ot:ot,state:true,
-                transmitter:transmitter}
+                transmitter:transmitter,report:report}
 			aux.push(object);
 			data={user:user,messages:JSON.stringify(aux)}; 
 			
@@ -694,7 +695,7 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 										user_exist=true;
 										aux = JSON.parse(x.messages);
 										object= { message:message_des,date:moment().format(),ot:ot,state:true,
-                                            transmitter:transmitter}
+                                            transmitter:transmitter,report:report}
 										aux.push(object);
 										console.log(aux);
 										data ={user:technicals_user_tr,messages:JSON.stringify(aux)};
@@ -717,7 +718,7 @@ notification_technical_tr = (user,report)=>{ // crear notificaciones
 
 						aux = [];
 						object = { message:message_des,date:moment().format(),ot:ot,state:true,
-                            transmitter:transmitter}
+                            transmitter:transmitter,report:report}
 						aux.push(object);
 						data={user:technicals_user_tr,messages:JSON.stringify(aux)}; 
 						
@@ -749,7 +750,7 @@ notification_manual_tr = () => {
 	   
 		aux = [];
 		object = { message:message,date:moment().format(),ot:ot,state:true,
-            transmitter:transmitter}
+            transmitter:transmitter,report:2}
 		aux.push(object);
 		data={user:user,messages:JSON.stringify(aux)}; 
 		
@@ -784,7 +785,7 @@ notification_manual_tr = () => {
 				  user_exist=true;
 				  aux = JSON.parse(x.messages);
 				  object = { message:message,date:moment().format(),ot:ot,state:true,
-                    transmitter:transmitter}
+                    transmitter:transmitter,report:2}
 				  aux.push(object);
 				  data ={user:user,messages:JSON.stringify(aux)};
 					 $.ajax({
