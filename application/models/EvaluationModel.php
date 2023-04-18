@@ -4,12 +4,13 @@ class EvaluationModel extends CI_Model {
 
     public function __construct(){
         parent::__construct();
+        
     }
 
     public function getEvaluationByOrder($id){
         
         
-        $query= "SELECT e.details ,o.problem, u.full_name , e.user_assignment,e.state,e.export,e.user_interaction,e.priority
+        $query= "SELECT e.details ,o.problem,o.ot_previous, u.full_name , e.user_assignment,e.state,e.export,e.user_interaction,e.priority
         FROM evaluation e
         LEFT JOIN  ot o ON o.id =e.ot_id
         LEFT JOIN user_role ur ON ur.user_id = e.user_assignment
@@ -56,10 +57,15 @@ class EvaluationModel extends CI_Model {
         return $this->db->query($query,array($id))->result();  
     } 
 
+    
 
     public function editEvaluation($id,$data){
+        /// nuevo//
+        if($data['ot_previous']!=""){
+            $query = "UPDATE ot SET ot_previous= ? WHERE id = ?";
+            $this->db->query($query, array($data['ot_previous'],$id)); 
+        }
 
-        
          $location = 0;
         if($data['userAdmin'] == 0){
 
@@ -77,7 +83,8 @@ class EvaluationModel extends CI_Model {
             );
     
             $this->db->insert('ot_location', $datos_ot_location);
-        }        
+        }   
+        // fin nuevo     
 
         $user= $_SESSION['full_name'];
         date_default_timezone_set("America/Santiago");

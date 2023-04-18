@@ -68,6 +68,13 @@
                   </select>
                   <div class="invalid-feedback"></div>
               </div>
+              <div class="col-md-4 mb-3">
+                  <label>Último servicio (OT anterior)</label>
+                  <select id="ot_previous" name="ot_previous">
+                      <option></option>
+                  </select>
+                  <div class="invalid-feedback"></div>
+              </div>
               
           </div>
           <div class="row mb-2">          

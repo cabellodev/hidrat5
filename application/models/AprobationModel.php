@@ -60,10 +60,19 @@ class AprobationModel extends CI_Model {
 
     public function updateNumberBilling($data)
     {   
-        
+        $billing="";
+        if($data['reason']==1){
+            $billing=$data['ot_number'];
+        }else if($data['reason']==2){
+            $billing='Devolución';
+        }else if($data['reason']==3){
+            $billing='Cortesía de cliente';
+        }else if($data['reason']==10){// 10 equivale a no data en reason 
+            $billing=$data['ot_number'];
+        }
 
         $sql = "UPDATE  quotation SET number_billing  = ? WHERE ot_id = ?"; //crear campo file en base de datos phpmyadmin
-        return $this->db->query($sql, array($data['number_billing'], $data['ot_number']));
+        return $this->db->query($sql, array($billing, $data['ot_number']));
         
     }
 

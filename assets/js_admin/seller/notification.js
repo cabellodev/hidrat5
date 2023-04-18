@@ -1,8 +1,6 @@
 $(() => {
    get_new_messages();
    get_notification();
-
- 
 });
 
 setInterval(function () {
@@ -60,8 +58,8 @@ get_notification =()=> {
 }
 
 
-
 get_new_messages=()=> {
+
     $.ajax({
 
         type: "GET",
@@ -69,7 +67,9 @@ get_new_messages=()=> {
         crossOrigin: false,
         dataType: "json",
         success: (result) => {
+
            let new_messages=0;
+
            result.notifications.forEach(x=>{
                let aux= JSON.parse(x.states);
                aux.forEach(w=>{
@@ -95,7 +95,6 @@ get_new_messages=()=> {
 }
 
 let id_user_notification;
-
 draw_notification=(data,new_message,user_notification)=>{
     id_user_notification=user_notification;
     notifications_all=data;
@@ -106,7 +105,7 @@ draw_notification=(data,new_message,user_notification)=>{
     
     if(new_message.length == 0){$('#icon-comment').css('color', 'white');}else{ $('#icon-comment').css('color', '#8FF103'); } */
 
-    let limit = 6; // limite de notificaciones a mostrar en ventanilla menor
+    let limit = 6; 
    
     data.forEach( (x)=> {
         let states = JSON.parse(x.states);
@@ -170,16 +169,15 @@ draw_notification=(data,new_message,user_notification)=>{
 }
 }
 
-
-
-
 changeCheck =(id)=>{
 
     $("#charge").removeClass("chargePage");
+
    let array=[];
    notifications_all.forEach(x=>{
+
         if(x.id_notification== id){
-            console.log("entre");
+           
            let aux = JSON.parse(x.states);
            array = aux.map(w =>{
                
@@ -196,10 +194,10 @@ changeCheck =(id)=>{
 
 
    let data = {states : JSON.stringify(array)}
-   console.log(data);
+  
 
     $.ajax({
-        data: { data },
+        data: {data},
 		type: "POST",
 		url: host_url + `api/change_notification/${id}`,
 		crossOrigin: false,
@@ -207,9 +205,7 @@ changeCheck =(id)=>{
 		success: () => {
             $('#card_notification').empty();
             get_notification();
-
             $("#charge").addClass("chargePage");
-           
 		},
 		error: (result) => {
 			swal({
@@ -219,7 +215,6 @@ changeCheck =(id)=>{
 			});
 		},
 	}); 
-
 }
 
 
@@ -255,7 +250,7 @@ directOrder=(id)=>{
 }
 
 
-const tabla_notifications = $("#table-notifications").DataTable({
+const tabla_notifications = $("#table-notifications").DataTable({ 
 	// searching: true,
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
@@ -283,6 +278,7 @@ const tabla_notifications = $("#table-notifications").DataTable({
                              }
                    }
      },// end defaultCon
+    
 		{ data: "date" },
         { data: "ot_id" },
 		{ data: "author" },
@@ -301,6 +297,11 @@ data_note_seller=(data)=>{
 $('#btn_history_notification').on('click',()=>{
     $('#modal_history_notification').modal("show");
 });
+
+
+
+
+
 
 
 

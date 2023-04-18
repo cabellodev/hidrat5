@@ -3,7 +3,7 @@ $(()=>{
     get_data_ap();
 });
 
-
+let billing_field= "";
 let check_client_old= false;
 
 get_data_ap = () =>{
@@ -16,11 +16,12 @@ get_data_ap = () =>{
 	xhr.setRequestHeader("Cache-Control", "no-cache");
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-		
+
 			let data = xhr.response[0];
             let data2 = xhr.response[0].user_interaction;
-		//nueva linea
-			if(data){ //linea nueva
+		
+			if(data){ 
+
 			    if(data.approve_client === "1" ){	
 					$("#approve_client" ).prop('checked', true);
 					check_client_old = true;
@@ -34,6 +35,9 @@ get_data_ap = () =>{
 				$( "#date_ap" ).val(data.date_send_qt);
 				$( "#number_qt").val(data.number_qt);
 				$( "#number_bill").val(data.number_billing);
+				billing_field=data.number_billing;
+				
+
 			
 			}else{
 				$( "#date_ap" ).val('');
@@ -41,7 +45,7 @@ get_data_ap = () =>{
 				$( "#approve_client" ).prop('checked', false);
 				$( "#number_qt").val('');
 				$( "#number_bill").val('');
-	
+				
 			}
 
 			if(data2){
@@ -101,6 +105,7 @@ ap_enableFields = ()=>{
         $("#hab_edit_ap").addClass("btn btn-danger");
         $("#hab_edit_ap").text("Cancelar");
         $("#btn_aprobation").show();
+		
 	}else if(a==1){
         $("#date_ap").prop( "disabled", true );
 		$('#date_send_qt').prop( "disabled", true);
@@ -135,6 +140,7 @@ edit_ap = () => {
 		user_approve: $("#user_approve_ap").val(),
 		date_approve:$("#date_approve_ap").val(),//fin
 		check_client_old: check_client_old,
+		
 	};
 
 
@@ -165,6 +171,9 @@ edit_ap = () => {
 	                $("#approve_client" ).prop( "disabled", true );
 					ap_enableFields();
 				swal.close();
+				if(billing_field != data.bill_number ){ // si el campo de facturación es distinto al que venia por base de datos, envia notification
+					notification_billing(10);
+				}
 			   });
 		},
 		error: (result) => {
@@ -179,6 +188,76 @@ edit_ap = () => {
 		},
 	});
 };
+
+
+let all_users_ap=[]
+ 
+ get_users_ap =()=> {
+
+    $.ajax({
+	
+		type: "GET",
+		url: host_url + "api/get_user_notifications",
+		crossOrigin: false,
+		async: false,
+		dataType: "json",
+		success: (result) => {
+             all_users=result.users;
+           console.log(all_users);
+		},
+      
+		error: (result) => {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: result.responseJSON.msg,
+			});
+		},
+	});
+}
+
+
+notification_billing_ap=(reason)=>{
+   
+    all_users =[];
+    // recupera el id del usuario actual 
+    get_users();
+
+    let aux =all_users.map(x => {
+		let data ={};
+		if(x.id_user != id_user_notification) {
+			data = {id:x.id_user ,show:0}
+			return data;
+		}else{
+			data = {id:x.id_user ,show:1}
+			return data;
+		}
+	});
+
+    let data = {
+		ot: $('#ot_number').val(),
+		states : JSON.stringify(aux),
+        reason: reason,
+    };
+
+
+    $.ajax({
+		data: { data },
+		type: "POST",
+		url: host_url + "api/notification/billing",
+		crossOrigin: false,
+		async:false,
+		dataType: "json",
+		success: (result) => {
+			console.log(result)
+		},
+        error: (result) => {
+            alert("no se ha enviado nada");}
+	});
+	
+}
+
+
 
 $("#ap_popover").on('click',function(){
 

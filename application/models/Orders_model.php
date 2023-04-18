@@ -8,6 +8,21 @@ class Orders_model extends CI_Model
         parent::__construct();
     }
 
+
+    public function get_historial_previous($ot_previous){
+        
+        $query = "SELECT ot_previous
+        FROM ot 
+        WHERE  id = ?";
+        $result= $this->db->query($query,array($ot_previous))->row_array();
+        
+        if($result['ot_previous']){
+           return $result['ot_previous'];
+        }else{
+           return 0;
+        }
+    }
+
     public function getOrder($id)
     {
         $query = "SELECT * FROM ot_location WHERE ot_id = ?";

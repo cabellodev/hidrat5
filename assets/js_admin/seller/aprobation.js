@@ -5,7 +5,7 @@ $(()=>{
 
 
 let check_client_old= false;
-
+let billing_field="";
 get_data_ap = () =>{
 
     id= $("#ot_number").val();
@@ -33,12 +33,14 @@ get_data_ap = () =>{
 				$( "#date_send_qt" ).val(data.date_quotation);
 				$( "#date_ap" ).val(data.date_send_qt);
 				$( "#number_qt").val(data.number_qt);
+				$( "#number_bill").val(data.number_billing);
 			
 			}else{
 				$( "#date_ap" ).val('');
 				$( "#date_send_qt" ).val('');
 				$( "#approve_client" ).prop('checked', false);
 				$( "#number_qt").val('');
+				$( "#number_bill").val('');
 	
 			}
 
@@ -118,7 +120,6 @@ ap_enableFields = ()=>{
 
 edit_ap = () => {
 
-   
 	event.preventDefault();
 	let id = $("#ot_number").val();//Image ID 
 	
@@ -128,7 +129,7 @@ edit_ap = () => {
 		qt_number:$("#number_qt").val(),
 		approve_client: $("#approve_client").is(':checked'),
 		user_approve: $("#user_approve_ap").val(),
-		date_approve:$("#date_approve_ap").val(),//fin
+		date_approve:$("#date_approve_ap").val(),
 		check_client_old: check_client_old,
 	};
 

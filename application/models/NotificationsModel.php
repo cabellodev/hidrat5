@@ -40,7 +40,7 @@ class NotificationsModel extends CI_Model
 
     public function get_user_notifications()
     {   
-        $user=$user= $_SESSION['id'];
+        $user= $_SESSION['id'];
         $sql = "SELECT u.id id_user
                 FROM user u 
                 JOIN user_role ur ON u.id = ur.user_id
@@ -52,10 +52,61 @@ class NotificationsModel extends CI_Model
     }
 
 
+    public function notifications_billing($data)
+    {   
+        $message="";
+     if($data['reason']==1){
+        $message='La orden '.$data['ot'].' cambio a facturado por '.$_SESSION['full_name'].'';
+     }else if($data['reason']==2){
+        $message='La orden '.$data['ot'].' se cerro por devolución. Hecho por '.$_SESSION['full_name'].'';
+     }
+     else if($data['reason']==3){
+        $message='La orden '.$data['ot'].' cerrada por cortesía del cliente. Hecho por '.$_SESSION['full_name'].'';
+     }else if($data['reason']==10){
+        $message='La orden '.$data['ot'].' a cambiado estado de cierre. Hecho por '.$_SESSION['full_name'].'';
+
+     }
+
+      date_default_timezone_set("America/Santiago");
+
+      $notification = array(
+        'author'=>$_SESSION['full_name'],
+        'message'=> $message,
+        'date'=>date("Y-m-d G:i:s"),
+        'user_id'=> $_SESSION['id'],
+        'state'=> false,
+        'ot_id'=> $data['ot'],
+        'rango'=> 1,
+        'states'=> $data['states']
+      );
+      
+
+      $query = "INSERT INTO notifications (author, message,date,notifications.user_id,state,ot_id, rango,states) VALUES (?, ?,?,?,?,?,?,?)";
+      
+      return $this->db->query($query,$notification); 
+    }
 
 
-   //subir imagenes
-   
-}
+
+
+    public function change_all_states($data)
+    {   
+       $success=true;
+       foreach($data as $value){    
+         $query = "UPDATE notifications SET state = ?,states = ? WHERE id_notification = ?";
+          if($this->db->query($query, array(true,$value['states'],$value['id']))){
+             $success=true;
+          }else{
+            $success=false;
+          }
+       }
+       return $success;
+    }
+
+
+
+
+
+   }
 
 

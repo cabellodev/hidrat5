@@ -32,6 +32,9 @@ class Evaluation extends CI_Controller
         }
     }
 
+
+   
+
     public function editEvaluation($id){
 
         if($this->accesscontrol->checkAuth()['correct']) {
@@ -81,7 +84,7 @@ class Evaluation extends CI_Controller
 
     public function pdfEvaluation($data){
         $pdf = new PDF();
-        $url="http://localhost/hidrat/";
+        $url="http://localhost/hidrat5/";
         $pdf->AliasNbPages();
         $pdf->AddPage('P','Letter');
         $pdf->SetFont('Arial','B',15);
@@ -139,7 +142,7 @@ class Evaluation extends CI_Controller
 	function Header()
 	{   
 
-        $this->Image('http://localhost/hidrat/assets/img/hidratec_report.jpeg',10,8,50,0); 
+        $this->Image('http://localhost/hidrat5/assets/img/hidratec_report.jpeg',10,8,50,0); 
         $this->SetFont('Arial', 'B', 10);
         $this->SetTextColor(19,66,115);
         $this->SetX(-50);

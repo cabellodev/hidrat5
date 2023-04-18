@@ -1,10 +1,12 @@
 $(() => {
     get_locations();
-   
+    get_historial();
+    
 });
 
 let state = $('#state').val();
 let ubicaciones = [];
+
 
 getOrders = () => {
 	let xhr = new XMLHttpRequest();
@@ -296,6 +298,7 @@ $("#table_orders").on("click", "button", function () {
          get_history_states();
          get_notes_ot();
          getImages();
+         get_historial();
     } 
 });
 
@@ -324,6 +327,40 @@ editOt =()=>{
 
 
 
+
+
+
+
+/// notifications-billing
+
+
+let all_users=[]
+ 
+ get_users =()=> {
+
+    $.ajax({
+	
+		type: "GET",
+		url: host_url + "api/get_user_notifications",
+		crossOrigin: false,
+		async: false,
+		dataType: "json",
+		success: (result) => {
+             all_users=result.users;
+           console.log(all_users);
+		},
+      
+		error: (result) => {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: result.responseJSON.msg,
+			});
+		},
+	});
+}
+
+
 save_number_billig = ()=>{
    
     number_billing = $("#billing_number").val();
@@ -334,47 +371,168 @@ save_number_billig = ()=>{
         swal({
             title: "Atención",
             icon: "warning",
-            text: "El número de facturación esta ingresado con anterioridad.",
+            text: "Ya existe datos de cierre en esta OT. Desea sobreescribir la información existente para seguir?",
         }).then(()=>{
             $("#number_billing").val("");
+            request_billing();
         });
       
-    }else{
-        
-        
-       let data = {
-         number_billing: number_billing,
-         ot_number: $('#ot_number').val(),
-         message: "mensajes",
-       }
-        
-        $.ajax({
-        type: "POST",
-        url: host_url + 'api/updateNumberBilling',// agregar nueva ruta .
-        data: {data},
-        dataType: "json",
-        success: (result) => {
-            swal({
-                title: "Éxito!",
-                icon: "success",
-                text: "Número de factura registrado con éxito.",
-                button: "OK",
-            }).then(() => {
-                $("#number_billing").val("");
-                get_data_ap();
-            });
-        }, 
-        error: () => {
-          console.log("error en el guardado de la facturacion ");
-        },
-    })   
-       
-       
-
+    }else{  
+        request_billing();
     }
+}
+
+request_billing= ()=>{
+    let data = {
+        number_billing: number_billing,
+        ot_number: $('#ot_number').val(),
+        reason: $('#reason_close').val(),
+      }
+      console.log(data.reason);
+       
+       $.ajax({
+       type: "POST",
+       url: host_url + 'api/updateNumberBilling',// agregar nueva ruta .
+       data: {data},
+       dataType: "json",
+       success: (result) => {
+           swal({
+               title: "Éxito!",
+               icon: "success",
+               text: "Número de factura registrado con éxito.",
+               button: "OK",
+           }).then(() => {
+               $("#number_billing").val("");
+               get_data_ap();
+               notification_billing(data.reason);
+           });
+       }, 
+       error: () => {
+         console.log("error en el guardado de la facturacion ");
+       },
+   })   
 
 
 }
+
+
+notification_billing=(reason)=>{
+   
+    all_users =[];
+    // recupera el id del usuario actual 
+    get_users();
+
+    let aux =all_users.map(x => {
+		let data ={};
+		if(x.id_user != id_user_notification) {
+			data = {id:x.id_user ,show:0}
+			return data;
+		}else{
+			data = {id:x.id_user ,show:1}
+			return data;
+		}
+	});
+
+    let data = {
+		ot: $('#ot_number').val(),
+		states : JSON.stringify(aux),
+        reason: reason,
+
+    };
+
+
+    $.ajax({
+		data: { data },
+		type: "POST",
+		url: host_url + "api/notification/billing",
+		crossOrigin: false,
+		async:false,
+		dataType: "json",
+		success: (result) => {
+			console.log(result)
+		},
+        error: (result) => {
+            alert("no se ha enviado nada");}
+		
+	});
+	
+}
+
+get_historial=()=>{
+    let id = $('#ot_number').val();
+    let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/gethistorialprevious/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+            aux=[];
+            
+            xhr.response.forEach( x =>{
+                let object={};
+                    object = {
+                       ot:x.ot_previous,
+                       enterprise:x.details.enterprise,
+                        description:x.details.description,
+                        component:x.details.component,
+                        service:x.details.service,
+                        
+                    }
+                aux.push(object);
+                });
+               
+
+           
+
+            console.log(aux);
+            tabla_previous.clear();
+			tabla_previous.rows.add(aux);
+			tabla_previous.draw();
+            
+		} else {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: "Error al obtener las órdenes de trabajo",
+			});
+		}
+	});
+	xhr.send(); 
+}
+
+const tabla_previous= $('#table_previous').DataTable({
+    
+	language: {
+		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+	},
+    
+	columns: [
+        { data: "ot"},
+        { data: "enterprise" },
+        { data: "description" },
+        { data: "component" },
+		{ data: "service" },
+        {
+            defaultContent: `<button type='button' name='btn_change' class='btn btn-primary'>
+                                <i class="fas fa-hand-pointer"></i>
+                              </button>`,
+		},
+       
+        
+	],
+});
+
+$("#table_previous").on("click", "button", function () {
+    let data = tabla_previous.row($(this).parents("tr")).data();
+    if ($(this)[0].name == "btn_change") {
+        let url = 'stagesOrder'+'?ot='+data.ot;
+        window.location.assign(host_url+url);
+   } 
+});
+
+
+$("#previous").on('click', () => {
+	$("#modal_previous").modal('show');
+})
 
 
 $("#edit_ot").on("click",editOt);
@@ -388,6 +546,8 @@ $("#btn_save_close").on("click",save_number_billig);
 $("#btn_create").on('click', () => {
 	window.open(host_url+'newOrder', '_self');
 })
+
+
 
 
 
