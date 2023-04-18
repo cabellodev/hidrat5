@@ -187,8 +187,8 @@
                     <ul class="navbar-nav ml-auto"> 
                     <li class="nav-item dropdown no-arrow">
                         
-                        <a class="nav-link dropdown-toggle" href="#chat" id="userDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#chat" id="btn_history_notification" role="button"
+                             aria-haspopup="true" aria-expanded="false">
 
                             <span class="mr-2 d-none d-lg-inline text-white small"></span>
                                 <i class="fa fa-bell" id="icon-comment" style="color:white; font-size:30px"></i>
@@ -197,18 +197,8 @@
                           
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-                            <div class="card-body dropdown-item"  href="#chat">
-                             <div  id="card_notification" style="height:300px;overflow-y: auto;" >
-                             
-                             </div>
-                             <button class="btn btn-dark"id="btn_history_notification" >Historial de notificaciones </button>
-
-                            </div>
-                        <div>
+                       
                     </li>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                         
@@ -263,35 +253,36 @@
     </div>
 
 
-
     <div class="modal fade" id="modal_history_notification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog"  style="max-width: 1350px!important;" role="document">
             <div class="modal-content">
+                   
                 <div class="modal-header">
-
-                    <h5 class="modal-title" id="exampleModalLabel">Historial de notificaciones</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Notificaciones</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                
+                <button class="btn btn-dark" id="view-all-notifications"  >
+                    Ver todos
+                </button>
+
                 <div class="table-responsive">
                             <table class="table table-bordered" id="table-notifications" width="100%" cellspacing="0">
                                 <thead>
                                          <tr>
                                             <th>Notificación</th>
                                             <th>Fecha</th>
+                                            <th>Visto</th>
                                             <th>Orden</th>
                                             <th>Generado por</th>
-
                                          </tr>
                                 </thead>
                              </table>
                     </div>
-
-
-
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button"  data-dismiss="modal">Cancel</button>
@@ -299,7 +290,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
+
 
 
     

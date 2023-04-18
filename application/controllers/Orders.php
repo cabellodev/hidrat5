@@ -33,6 +33,30 @@ class Orders extends CI_Controller
         }
     }
 
+
+    public function get_historial_previous($id){
+
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->model('EvaluationModel');
+            $order_previous = $id;
+            $collections=array();
+            while($order_previous !=0){
+                $order_previous=$this->Orders_model->get_historial_previous($order_previous);
+                if ($order_previous == 0 ){
+                    continue;
+                }
+                $details = $this->Orders_model->getOrder($order_previous);
+                $aux = array("ot_previous"=>$order_previous,"details"=>$details);
+                array_push($collections,$aux);
+
+            }
+                $this->response->sendJSONResponse($collections); 
+        }else {
+            redirect('Home/login', 'refresh');
+        }
+    }
+
+
     public function newOrder()
     { 
         if ($this->accesscontrol->checkAuth()['correct']) {

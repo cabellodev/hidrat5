@@ -202,7 +202,7 @@ $route['api/deleteNote']['POST'] = 'Notes/deleteNote';
 //api Seller 
 $route['api/getApproveTechnicalReport']['GET'] = 'Seller/getApproveTechnicalReport';
 $route['api/getOrdersQuotation']['GET'] = 'Seller/getOrdersQuotation';
-$route['api/changeState']['POST'] = 'Seller/changeState';
+$route['api/seller/changeState']['POST'] = 'Seller/changeState';
 $route['api/OCseller/(:num)']['POST'] = 'Seller/editOC/$1';
 /*------------------------------- End Routes Seller------------------------------------ */
 
@@ -377,11 +377,16 @@ $route['api/technicalMaster/getOrderById/(:num)']['GET']='TechnicalMaster/orderB
 $route['api/stageOrderTechnical']['GET']='TechnicalMaster/stagesOrderTechnicals';
 $route['api/notification_late']['GET']='NotificationLate/get_orders_late';
 
+// admin - user 
 
+$route['api/get_id_user']['GET']='Notifications/get_id_user';
 
+//admin notifictions billing 
 
+$route['api/notification/billing']['POST']='Notifications/notification_billing';
 
+// view all notificacions 
+$route['api/change_all_states']['POST']='Notifications/change_all_states';
+$route['api/gethistorialprevious/(:num)']['GET']='Orders/get_historial_previous/$1';
 
-
-
-
+$route['api/get_operational/(:num)']['GET']='Orders/get_operationl/$1';

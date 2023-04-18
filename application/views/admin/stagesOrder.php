@@ -121,6 +121,13 @@
                  <button class="btn btn-primary float-right form-control" type='button'  id="edit_ot"><i class="fas fa-edit"></i> Editar</button>
               </div>
         </div>
+        <div class="row mb-2">
+              
+              <div class="col-md-3 mb-3">
+                 <button class="btn btn-success form-control" type='button'  id="previous"><i class="fas fa-search"></i> Órdenes anteriores </button>
+              </div>
+              
+        </div>
         </div>
       </div>
     </div>
@@ -196,7 +203,7 @@
                         <select class="form-select form-control" id="reason_close" name="range" >
                             <option value="1">Facturación</option>
                             <option value="2">Devolución</option>
-                            <option value="3">Otro</option>
+                            <option value="3">Cortesía cliente</option>
 
                         </select>
                         <div class="invalid-feedback"></div>
@@ -214,6 +221,41 @@
                     </div>
                 </form>
                 </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modal_previous" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog mw-100 w-75" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Historial del componente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="table_previous" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>N° de OT </th>
+                  <th>Cliente</th>
+                  <th>Description</th>
+                  <th>Componente </th>
+                  <th>Tipo de servicio</th>
+                  <th>Seleccionar OT</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
     </div>
   </div>
 </div>

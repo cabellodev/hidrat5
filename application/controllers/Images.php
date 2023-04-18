@@ -178,9 +178,6 @@ class Images extends CI_Controller
 				$_FILES['file']['error']=$aux['file']['error'][$i];
 				$_FILES['file']['size']=$aux['file']['size'][$i];
 
-				
-
-	
 				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 				if ($this->upload->do_upload("file")) {

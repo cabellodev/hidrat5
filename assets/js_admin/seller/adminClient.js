@@ -530,7 +530,7 @@ approve_client = (id, state,id_enterprise) => {
 		}
 	});
 
-	console.log(aux);
+	
 	
 	let data = {
 		approve: state == "Aprobado" ? 0 : 1,
@@ -541,7 +541,7 @@ approve_client = (id, state,id_enterprise) => {
 	$.ajax({
 		data: { data },
 		type: "POST",
-		url: host_url + "api/changeState",
+		url: host_url + "api/seller/changeState",
 		crossOrigin: false,
 		async:false,
 		dataType: "json",
@@ -564,7 +564,6 @@ approve_client = (id, state,id_enterprise) => {
 			});
 		},
 	});
-	
 };
 
 

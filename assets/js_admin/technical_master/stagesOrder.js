@@ -1,5 +1,6 @@
 $(() => {
     get_locations();
+    get_images();
 });
 
 let state = $('#state').val();
@@ -26,6 +27,7 @@ getOrders = () => {
 	});
 	xhr.send();
 };
+
 
 get_locations = () => {
 	let xhr = new XMLHttpRequest();

@@ -28,6 +28,8 @@ class Notifications extends CI_Controller
         }
     }
 
+    
+
     public function get_id_user()
     { 
         
@@ -50,6 +52,40 @@ class Notifications extends CI_Controller
 				$this->response->sendJSONResponse(array('msg' => "Estado cambiado exitosamente."));
 			} else {
 				$this->response->sendJSONResponse(array('msg' => "No se pudo cambiar el estado."), 400);
+			}
+		} else {
+			$this->response->sendJSONResponse(array('msg' => 'Permisos insuficientes'), 400);
+		}
+
+    }
+
+
+    public function change_all_states(){
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->model('NotificationsModel');
+            $data = $this->input->post('data');
+		
+			if ($this->NotificationsModel->change_all_states($data)) {
+				$this->response->sendJSONResponse(array('msg' => "Estado cambiado exitosamente."));
+			} else {
+				$this->response->sendJSONResponse(array('msg' => "No se pudo cambiar el estado."), 400);
+			}
+		} else {
+			$this->response->sendJSONResponse(array('msg' => 'Permisos insuficientes'), 400);
+		}
+
+    }
+
+
+    public function notification_billing(){
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            
+            $this->load->model('NotificationsModel');
+            $data = $this->input->post('data');
+			if ($this->NotificationsModel->notifications_billing($data)) {
+				$this->response->sendJSONResponse(array('msg' => "ok"),200);
+			} else {
+				$this->response->sendJSONResponse(array('msg' => "error"), 400);
 			}
 		} else {
 			$this->response->sendJSONResponse(array('msg' => 'Permisos insuficientes'), 400);

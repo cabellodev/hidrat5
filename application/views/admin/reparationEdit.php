@@ -77,6 +77,10 @@
                         </div>
                     </div>
                 </div> 
+                <div class="form-group" style="margin-top: 40px; display: flex; align-items:center; justify-content: center;">
+        <button class="btn btn-success" value='0' type='button' id="r_btnEdit"><i id='r_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
+        <button class="btn btn-success" style='display:none' type='button' id="r_btnSave"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
+    </div>
             </div>
         </div>
     </div>
@@ -142,10 +146,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group" style="margin-top: 40px; display: flex; align-items:center; justify-content: center;">
-        <button class="btn btn-success" value='0' type='button' id="r_btnEdit"><i id='r_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
-        <button class="btn btn-success" style='display:none' type='button' id="r_btnSave"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
-    </div>
+    
 </div>
 
 

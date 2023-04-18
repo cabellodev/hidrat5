@@ -41,6 +41,14 @@
                       <div class="invalid-feedback"></div>
                   </div>
                 </div>
+                
+                <div class="col-md-3 mb-3">
+                  <label for="actividad">Fecha de aprobación de cotización</label>
+                  <div class="input-group" id='frm_date_admission'>
+                      <input type="text" class="form-control" name="date_ap" id="date_ap" disabled>
+                      <div class="invalid-feedback"></div>
+                  </div>
+                </div>
               </div>
 
               <div class="row mb-2 ">
@@ -52,9 +60,9 @@
                   </div>
                 </div>
                 <div class="col-md-3 mb-3">
-                  <label for="actividad">Número de cotización</label>
-                  <div class="input-group" id='number_quotation'>
-                      <input type="number" class="form-control" min="1" pattern="^[0-9]+" name="number_qt" id="number_qt" disabled>
+                  <label for="actividad">Facturación/estado</label>
+                  <div class="input-group" id='facturation'>
+                      <input type="text" class="form-control" name="number_bill" id="number_bill" disabled>
                       <div class="invalid-feedback"></div>
                   </div>
                 </div>              

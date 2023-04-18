@@ -169,7 +169,7 @@ get_data_reparation_subtareas = () => {
             swal({
 				title: "Error",
 				icon: "error",
-				text: "Error al obtener las subtareas2",
+				text: "Error al obtener las subtareas",
 			});
         }
     });
